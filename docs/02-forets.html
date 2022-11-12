@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Méthodes par arbres - 2&nbsp; Forêts aléatoires</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-boosting.html" rel="next">
+<link href="./01-arbres.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Méthodes par arbres</a> 
+        <div class="sidebar-tools-main">
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Présentation</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Arbres</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-arbres.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Arbres</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Agrégation</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-forets.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-boosting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradient boosting</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Références</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-forets" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div>
+<div class="cell">
+
+</div>
+<style>
+div.correction {
+  color: black;
+  background-color: #F0F0F0;
+  font-style: normal;
+  display: none;
+}
+
+.corR {
+  font-style: italic;
+  display: none;
+}
+
+.algo{
+  color: black;
+  background-color: #F9C4ED;
+  font-style: normal;
+}
+</style>
+</div>
+<div class="cell">
+
+</div>
+<p>Les méthodes par arbres présentées précédemment sont des algorithmes qui possèdent tout un tas de qualités (facile à mettre en œuvre, interprétable…). Ce sont néanmoins rarement les algorithmes qui se révèlent les plus performants. Les méthodes d’agrégation d’arbres présentées dans cette partie sont souvent beaucoup plus pertinentes, notamment en terme de qualité de prédiction. Elles consistent à construire un très grand nombre d’arbres “simples” : <span class="math inline">\(g_1,\dots,g_B\)</span> et à les agréger en faisant la moyenne : <span class="math display">\[\frac{1}{B}\sum_{k=1}^Bg_k(x).\]</span> Les forêts aléatoires <span class="citation" data-cites="bre01">(<a href="references.html#ref-bre01" role="doc-biblioref">Breiman 2001</a>)</span> et le gradient boosting <span class="citation" data-cites="fri01">(<a href="references.html#ref-fri01" role="doc-biblioref">Friedman 2001</a>)</span> utilisent ce procédé d’agrégation. Dans ce chapitre on étudiera ces algorithmes sur le je de données <code>spam</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(spam)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>spam <span class="ot">&lt;-</span> spam[<span class="fu">sample</span>(<span class="fu">nrow</span>(spam)),]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Le problème est d’expliquer la variable binaire <strong>type</strong> par les autres.</p>
+<p>L’algorithme des forêts aléatoires consiste à construire des arbres sur des échantillons bootstrap et à les agréger. Il peut s’écrire de la façon suivante :</p>
+<div class="algo">
+<p><strong>Entrées</strong> :</p>
+<ul>
+<li><span class="math inline">\(x\in\mathbb R^d\)</span> l’observation à prévoir, <span class="math inline">\(\mathcal D_n\)</span> l’échantillon ;</li>
+<li><span class="math inline">\(B\)</span> nombre d’arbres ; <span class="math inline">\(n_{max}\)</span> nombre max d’observations par nœud</li>
+<li><span class="math inline">\(m\in\{1,\dots,d\}\)</span> le nombre de variables candidates pour découper un nœud.</li>
+</ul>
+<p><strong>Algorithme</strong> : pour <span class="math inline">\(k=1,\dots,B\)</span> :</p>
+<ol type="1">
+<li>Tirer un échantillon <em>bootstrap</em> dans <span class="math inline">\(\mathcal D_n\)</span></li>
+<li>Construire un <em>arbre CART sur cet échantillon bootstrap</em>, chaque coupure est sélectionnée en minimisant la fonction de coût de CART sur un ensemble de <span class="math inline">\(m\)</span> variables choisies au hasard parmi les <span class="math inline">\(d\)</span>. On note <span class="math inline">\(T(.,\theta_k,\mathcal D_n)\)</span> l’arbre construit.</li>
+</ol>
+<p><strong>Sortie</strong> : l’estimateur <span class="math inline">\(T_B(x)=\frac{1}{B}\sum_{k=1}^BT(x,\theta_k,\mathcal D_n)\)</span>.</p>
+</div>
+<p>Cet algorithme peut être utilisé sur <strong>R</strong> avec la fonction <strong>randomForest</strong> du package <strong>randomForest</strong> ou la fonction <strong>ranger</strong> du package <strong>ranger</strong>.</p>
+<div id="exr-exo-biais-var-bagging" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 2.1 (Biais et variance des algorithmes bagging) </strong></span>Comparer le biais et la variance de la forêt <span class="math inline">\(T_B(x)\)</span> au biais et à la variance d’un arbre de la forêt <span class="math inline">\(T(x,\theta_k,\mathcal D_n)\)</span>. On pourra utiliser <span class="math inline">\(\rho(x)=\text{corr}(T(x,\theta_1,\mathcal D_n),T(x,\theta_2,\mathcal D_n))\)</span> pour comparer les variances.</p>
+<div class="correction">
+<p>Pour simplifier les notations on considère <span class="math inline">\(T_1,\dots,T_B\)</span> <span class="math inline">\(B\)</span> variables aléatoires de même loi et de variance <span class="math inline">\(\sigma^2\)</span>. Il est facile de voir que <span class="math inline">\(\mathbf E[\bar T]=\mathbf E[T_1]\)</span>. Pour la variance on a</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf V[\bar T]= &amp; \frac{1}{B^2}\mathbf V\left[\sum_{i=1}^BT_i\right]= \frac{1}{B^2}\left[\sum_{i=1}^V\mathbf V[T_i]+\sum_{i\neq j}\mathbf{cov}(T_i,T_j)\right] \\
+= &amp; \frac{1}{B^2}\left[B\sigma^2+B(B-1)\rho\sigma^2\right]=\rho\sigma^2+\frac{1-\rho}{B}\sigma^2.
+\end{aligned}
+\]</span></p>
+<p>Considérons <span class="math inline">\(\rho\leq 0\)</span>. On déduit de l’équation précédente que <span class="math inline">\(B\leq 1-1/\rho\)</span>. Par exemple si <span class="math inline">\(\rho=-1\)</span>, <span class="math inline">\(B\)</span> doit être inférieur ou égal à 2. Il n’est en effet pas possible de considérer 3 variables aléatoires de même loi dont les corrélations 2 à 2 sont égales à -1. De même si <span class="math inline">\(\rho=-1/2\)</span>, <span class="math inline">\(B\leq 3\)</span>…</p>
+</div>
+</div>
+<div id="exr-exo-foret-comp-ranger-RF" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 2.2 (RandomForest versus ranger) </strong></span>On sépare le jeu de données <code>spam</code> en un échantillon d’apprentissage et un échantillon test :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(spam, <span class="at">prop =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>spam.app <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>spam.test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li><p>Entraîner une forêt aléatoire sur les données d’apprentissage uniquement en utilisant les paramètres par défaut de la fonction <strong>randomForest</strong>. Commenter.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Il s’agit d’une forêt de classification avec 500 arbres. Le paramètre <code>mtry</code> vaut 7 et l’erreur OOB est de 4.72%.</p>
+</div></li>
+<li><p>Calculer les groupes prédits pour les individus de l’échantillon test et en déduire une estimation de l’erreur de classification.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Calculer les estimations de la probabilité de spam pour les individus de l’échantillon test.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Refaire les questions précédentes avec la fonction <strong>ranger</strong> du package <strong>ranger</strong> (voir <a href="https://arxiv.org/pdf/1508.04409.pdf" class="uri">https://arxiv.org/pdf/1508.04409.pdf</a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Si on souhaite estimer les probabilités d’être (ou pas) spam, il faut le spécifier dans la construction de la forêt :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Comparer les temps de calcul de <strong>randomForest</strong> et <strong>ranger</strong>.</p>
+<div class="cell" data-teacher="false" data-hash="02-forets_cache/html/unnamed-chunk-10_25ef1ea9d00717bacf94dc7981606ca1">
+
+</div>
+<div class="corR">
+<p><strong>ranger</strong> est beaucoup plus rapide.</p>
+</div></li>
+</ol>
+</div>
+<div id="exr-exo-choix-par-forets" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 2.3 (Sélection des paramètres) </strong></span>Nous nous intéressons ici au choix des paramètres de la forêt aléatoire.</p>
+<ol type="1">
+<li><p>Expliquer la sortie suivante.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OOBCurve)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>foret1 <span class="ot">&lt;-</span> <span class="fu">ranger</span>(type<span class="sc">~</span>.,<span class="at">data=</span>spam,<span class="at">keep.inbag=</span><span class="cn">TRUE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>spam.task <span class="ot">&lt;-</span> mlr<span class="sc">::</span><span class="fu">makeClassifTask</span>(<span class="at">data=</span>spam,<span class="at">target=</span><span class="st">"type"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>erreurs <span class="ot">&lt;-</span> <span class="fu">OOBCurve</span>(foret1,<span class="at">measures =</span> <span class="fu">list</span>(mmce, auc),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">task=</span>spam.task,<span class="at">data=</span>spam)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>erreurs1 <span class="ot">&lt;-</span> erreurs <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">ntrees=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ntrees<span class="sc">&gt;=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>ntrees,<span class="at">names_to=</span><span class="st">"Erreur"</span>,<span class="at">values_to=</span><span class="st">"valeur"</span>)  </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(erreurs1)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>ntrees,<span class="at">y=</span>valeur)<span class="sc">+</span><span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Erreur,<span class="at">scales=</span><span class="st">"free"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02-forets_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="corR">
+<p>Ce graphe permet de visualiser l’évolution des erreurs OOB (AUC et erreur de classification) en fonction du nombre d’arbres. Il peut être utilisé pour voir si l’algorithme a bien “convergé”. Si ce n’est pas le cas, il faut construire une forêt avec plus d’arbres.</p>
+</div></li>
+<li><p>Construire la forêt avec <code>mtry=1</code> et comparer ses performances avec celle construite précédemment.</p>
+<div class="cell" data-teacher="false" data-hash="02-forets_cache/html/foret2_08a01dac4f475513072b38a9f1950a5d">
+
+</div>
+<div class="corR">
+<p>La forêt <code>foret1</code> est plus performante en terme d’erreur de classification OOB.</p>
+</div></li>
+<li><p>A l’aide des outils <code>tidymodels</code> sélectionner les paramètres <code>mtry</code> et <code>min_n</code> dans les grilles <code>c(1,6,seq(10,50,by=10),57)</code> et <code>c(1,5,100,500)</code>. On pourra notamment visualiser les critères en fonction des valeurs de paramètres.</p>
+<div class="corR">
+<p>On commence par construire la grille :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On définit le workflow</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On effectue la validation croisée en parallélisant :</p>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="corR">
+<p>On étudie les meilleures valeurs de paramètres pour les deux critères considérés :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On visualise les erreurs de classification</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>et les AUC</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On retrouve bien des petites valeurs pour <code>min_n</code> : il faut des arbres profonds pour que la forêt soit performante. Les valeurs optimales de <code>mtry</code> se situent autours de la valeur par défaut (7 ici). On peut donc conserver cette valeur pour ré-ajuster la forêt sur toutes les données :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Visualiser l’importance des variables pour les scores d’impureté et de permutations.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+</ol>
+</div>
+<div id="exr-exo-comp-arbre-foret-spam" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 2.4 (Arbre vs forêt aléatoire) </strong></span>Proposer et mettre en œuvre une procédure permettant de comparer les performances (courbes ROC, AUC et accuracy) d’un arbre CART utilisant la procédure d’élagage proposée dans la <a href="01-arbres.html#sec-elagage-cart"><span>Section&nbsp;1.2</span></a> avec une forêt aléatoire.</p>
+<div class="corR">
+<p>On peut envisager différentes stratégies pour répondre à cette question. Il convient de bien préciser ce que l’on souhaite faire. Il ne s’agit pas de sélectionner les paramètres d’un algorithme. On souhaite comparer deux algorithmes de prévision :</p>
+<ul>
+<li>un arbre CART qui utilise la procédure d’élagage CART : création de la suite optimale de sous arbre puis sélection d’un arbre dans cette suite en estimant l’erreur de classification par validation croisée ;</li>
+<li>une forêt aléatoire qui prend les valeurs par défaut pour <code>nodesize</code> et qui sélection <code>mtry</code> en minimisant l’erreur OOB (c’est un choix).</li>
+</ul>
+<p>Il faut estimer les risques demandés en se donnant une stratégie de ré-échantillonnage. On choisit une validation croisée 10 blocs :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On crée une fonction spécifique à chaque algorithme qui calculera les prévisions de nouveaux individus :</p>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="corR">
+<p>On effectue la validation croisée :</p>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="corR">
+<p>On déduit la courbe ROC, l’AUC</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>et l’accuracy</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-bre01" class="csl-entry" role="doc-biblioentry">
+Breiman, L. 2001. <span>«&nbsp;Random forests&nbsp;»</span>. <em>Machine learning</em> 45: 5‑32.
+</div>
+<div id="ref-fri01" class="csl-entry" role="doc-biblioentry">
+Friedman, J. H. 2001. <span>«&nbsp;Greedy Function Approximation: A Gradient Boosting Machine&nbsp;»</span>. <em>Annals of Statistics</em> 29: 1189‑1232.
+</div>
+</div>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-arbres.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Arbres</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-boosting.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradient boosting</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Méthodes par arbres - 1&nbsp; Arbres</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-forets.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Arbres</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Méthodes par arbres</a> 
+        <div class="sidebar-tools-main">
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Présentation</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Arbres</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-arbres.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Arbres</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Agrégation</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-forets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-boosting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradient boosting</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Références</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#coupures-cart-en-fonction-de-la-nature-des-variables" id="toc-coupures-cart-en-fonction-de-la-nature-des-variables" class="nav-link active" data-scroll-target="#coupures-cart-en-fonction-de-la-nature-des-variables"> <span class="header-section-number">1.1</span> Coupures CART en fonction de la nature des variables</a>
+  <ul class="collapse">
+  <li><a href="#arbres-de-régression" id="toc-arbres-de-régression" class="nav-link" data-scroll-target="#arbres-de-régression"> <span class="header-section-number">1.1.1</span> Arbres de régression</a></li>
+  <li><a href="#arbres-de-classification" id="toc-arbres-de-classification" class="nav-link" data-scroll-target="#arbres-de-classification"> <span class="header-section-number">1.1.2</span> Arbres de classification</a></li>
+  <li><a href="#entrée-qualitative" id="toc-entrée-qualitative" class="nav-link" data-scroll-target="#entrée-qualitative"> <span class="header-section-number">1.1.3</span> Entrée qualitative</a></li>
+  </ul></li>
+  <li><a href="#sec-elagage-cart" id="toc-sec-elagage-cart" class="nav-link" data-scroll-target="#sec-elagage-cart"> <span class="header-section-number">1.2</span> Élagage</a>
+  <ul class="collapse">
+  <li><a href="#élagage-pour-un-problème-de-régression" id="toc-élagage-pour-un-problème-de-régression" class="nav-link" data-scroll-target="#élagage-pour-un-problème-de-régression"> <span class="header-section-number">1.2.1</span> Élagage pour un problème de régression</a></li>
+  <li><a href="#élagage-en-classification-binaire-et-matrice-de-coût" id="toc-élagage-en-classification-binaire-et-matrice-de-coût" class="nav-link" data-scroll-target="#élagage-en-classification-binaire-et-matrice-de-coût"> <span class="header-section-number">1.2.2</span> Élagage en classification binaire et matrice de coût</a></li>
+  <li><a href="#calcul-de-la-sous-suite-darbres-optimaux" id="toc-calcul-de-la-sous-suite-darbres-optimaux" class="nav-link" data-scroll-target="#calcul-de-la-sous-suite-darbres-optimaux"> <span class="header-section-number">1.2.3</span> Calcul de la sous-suite d’arbres optimaux</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-arbres" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Arbres</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div>
+<div class="cell">
+
+</div>
+<style>
+div.correction {
+  color: black;
+  background-color: #F0F0F0;
+  font-style: normal;
+  display: none;
+}
+
+.corR {
+  font-style: italic;
+  display: none;
+}
+
+.algo{
+  color: black;
+  background-color: #F9C4ED;
+  font-style: normal;
+}
+</style>
+</div>
+<div class="cell">
+
+</div>
+<p>Les méthodes par arbres sont des algorithmes où la prévision s’effectue à partir de <strong>moyennes locales</strong>. Plus précisément, étant donné un échantillon <span class="math inline">\((x_1,y_1)\dots,(x_n,y_n)\)</span>, l’approche consiste à :</p>
+<ul>
+<li>construire une partition de l’espace de variables explicatives (<span class="math inline">\(\mathbb R^p\)</span>) ;</li>
+<li>prédire la sortie d’une nouvelle observation <span class="math inline">\(x\)</span> en faisant :
+<ul>
+<li>la moyenne des <span class="math inline">\(y_i\)</span> pour les <span class="math inline">\(x_i\)</span> qui sont dans la même classe que <span class="math inline">\(x\)</span> si on est en régression ;</li>
+<li>un vote à la majorité parmi les <span class="math inline">\(y_i\)</span> tels que les <span class="math inline">\(x_i\)</span> qui sont dans la même classe que <span class="math inline">\(x\)</span> si on est en classification.</li>
+</ul></li>
+</ul>
+<p>Bien entendu toute la difficulté est de trouver la “bonne partition” pour le problème d’intérêt. Il existe un grand nombre d’algorithmes qui permettent de trouver une partition. Le plus connu est l’algorithme <strong>CART</strong> <span class="citation" data-cites="brfrolst84">(<a href="references.html#ref-brfrolst84" role="doc-biblioref">Breiman et al. 1984</a>)</span> où la partition est construite par <strong>divisions successives</strong> au moyen d’hyperplan orthogonaux aux axes de <span class="math inline">\(\mathbb R^p\)</span>. L’algorithme est récursif : il va à chaque étape séparer un groupe d’observations (<strong>nœuds</strong>) en deux groupes (<strong>nœuds fils</strong>) en cherchant la meilleure variable et le meilleur seuil de coupure. Ce choix s’effectue à partir d’un critère <strong>d’impureté</strong> : la meilleure coupure est celle pour laquelle l’impureté des 2 nœuds fils sera minimale. Nous étudions cet algorithme dans cette partie.</p>
+<section id="coupures-cart-en-fonction-de-la-nature-des-variables" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="coupures-cart-en-fonction-de-la-nature-des-variables"><span class="header-section-number">1.1</span> Coupures CART en fonction de la nature des variables</h2>
+<p>Une partition CART s’obtient en séparant les observations en 2 selon une coupure parallèle aux axes puis en itérant ce procédé de séparation binaire sur les deux groupes… Par conséquent la première question à se poser est : pour un ensemble de données <span class="math inline">\((x_1,y_1),\dots,(x_n,y_n)\)</span> fixé, comment obtenir la meilleure coupure ?</p>
+<p>Comme souvent ce sont les données qui vont répondre à cette question. La sélection de la meilleur coupure s’effectue en introduisant une <strong>fonction d’impureté</strong> <span class="math inline">\(\mathcal I\)</span> qui va mesurer le degrés d’hétérogénéité d’un nœud <span class="math inline">\(\mathcal N\)</span>. Cette fonction prendra de</p>
+<ul>
+<li>grandes valeurs pour les nœuds hétérogènes (les valeurs de <span class="math inline">\(Y\)</span> diffèrent à l’intérieur du nœud) ;</li>
+<li>faibles valeurs pour les nœuds homogènes (les valeurs de <span class="math inline">\(Y\)</span> sont proches à l’intérieur du nœud).</li>
+</ul>
+<p>On utilise souvent comme fonction d’impureté :</p>
+<ul>
+<li><p>la <strong>variance</strong> en régression</p>
+<p><span class="math display">\[\mathcal I(\mathcal N)=\frac{1}{|\mathcal N|}\sum_{i:x_i\in\mathcal N}(y_i-\overline{y}_{\mathcal N})^2,\]</span> où <span class="math inline">\(\overline{y}_{\mathcal N}\)</span> désigne la moyenne des <span class="math inline">\(y_i\)</span> dans <span class="math inline">\(\mathcal N\)</span>.</p></li>
+<li><p>l’impureté de <strong>Gini</strong> en classification binaire</p>
+<p><span class="math display">\[\mathcal I(\mathcal N)=2p(\mathcal N)(1-p(\mathcal N))\]</span> où <span class="math inline">\(p(\mathcal N)\)</span> représente la proportion de 1 dans <span class="math inline">\(\mathcal N\)</span>.</p></li>
+</ul>
+<p>Les coupures considérées par l’algorithme CART sont des hyperplans orthogonaux aux axes de <span class="math inline">\(\mathbb R^p\)</span>, choisir une coupure revient donc à choisir une variable <span class="math inline">\(j\)</span> parmi les <span class="math inline">\(p\)</span> variables explicatives et un seuil <span class="math inline">\(s\)</span> dans <span class="math inline">\(\mathbb R\)</span>. On peut donc représenter une coupure par un couple <span class="math inline">\((j,s)\)</span>. Une fois l’impureté définie, on choisira la coupure <span class="math inline">\((j,s)\)</span> qui <strong>maximise le gain d’impureté</strong> entre le noeud père et ses deux noeuds fils : <span class="math display">\[\Delta(\mathcal I)=\mathbf P(\mathcal N)\mathcal I(\mathcal N)-(\mathbf P(\mathcal N_1(j,s))\mathcal I(\mathcal N_1(j,s))+\mathbf P(\mathcal N_2(j,s))\mathcal I(\mathcal N_2(j,s))\]</span> où</p>
+<ul>
+<li><span class="math inline">\(\mathcal N_1(j,s)\)</span> et <span class="math inline">\(\mathcal N_2(j,s)\)</span> sont les 2 nœuds fils de <span class="math inline">\(\mathcal N\)</span> engendrés par la coupure <span class="math inline">\((j,s)\)</span> ;</li>
+<li><span class="math inline">\(\mathbf P(\mathcal N)\)</span> représente la proportion d’observations dans le nœud <span class="math inline">\(\mathcal N\)</span>.</li>
+</ul>
+<section id="arbres-de-régression" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="arbres-de-régression"><span class="header-section-number">1.1.1</span> Arbres de régression</h3>
+<p>On considère le jeu de données suivant où le problème est d’expliquer la variable quantitative <span class="math inline">\(Y\)</span> par la variable quantitative <span class="math inline">\(X\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5678</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>X<span class="sc">*</span>(X<span class="sc">&lt;=</span><span class="fl">0.6</span>)<span class="sc">+</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">*</span>X<span class="fl">+3.2</span>)<span class="sc">*</span>(X<span class="sc">&gt;</span><span class="fl">0.6</span>)<span class="sc">+</span><span class="fu">rnorm</span>(n,<span class="at">sd=</span><span class="fl">0.1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X,Y)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data1)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>X,<span class="at">y=</span>Y)<span class="sc">+</span><span class="fu">geom_point</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-arbres_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>A l’aide de la fonction <strong>rpart</strong> du package <strong>rpart</strong>, construire un arbre permettant d’expliquer <span class="math inline">\(Y\)</span> par <span class="math inline">\(X\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Visualiser l’arbre à l’aide des fonctions <strong>prp</strong> et <strong>rpart.plot</strong> du package <strong>rpart.plot</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Écrire l’estimateur associé à l’arbre.</p>
+<div class="corR">
+<p>On a un modèle de régression</p>
+<p><span class="math display">\[Y=m(X)+\varepsilon\]</span></p>
+<p>où la fonction de régression (inconnue) <span class="math inline">\(m(x)\)</span> est estimée par</p>
+<p><span class="math display">\[\widehat m(x)=0.31\, \mathbf{1}_{x\lt 0.58}+2.4\,\mathbf{1}_{x\geq 0.58}.\]</span></p>
+</div></li>
+<li><p>Ajouter sur le graphe de la question 1 la partition définie par l’arbre ainsi que les valeurs prédites.</p>
+<div class="corR">
+<p>On obtient une partition avec 2 nœuds terminaux. Cette partition peut être résumée par la question : “est-ce que <span class="math inline">\(X\)</span> est plus petit que 0.58 ?”.</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+</ol>
+</section>
+<section id="arbres-de-classification" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="arbres-de-classification"><span class="header-section-number">1.1.2</span> Arbres de classification</h3>
+<p>On considère les données suivantes où le problème est d’expliquer la variable binaire <span class="math inline">\(Y\)</span> par deux variables quantitatives <span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_2\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5678</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,n)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Y[X1<span class="sc">&lt;=</span><span class="fl">0.45</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(X1<span class="sc">&lt;=</span><span class="fl">0.45</span>),<span class="dv">1</span>,<span class="fl">0.85</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">52432</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>Y[X1<span class="sc">&gt;</span><span class="fl">0.45</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(X1<span class="sc">&gt;</span><span class="fl">0.45</span>),<span class="dv">1</span>,<span class="fl">0.15</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X1,X2,Y)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data2)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">color=</span>Y)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">scale_x_continuous</span>(<span class="at">name=</span><span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name=</span><span class="st">""</span>)<span class="sc">+</span><span class="fu">theme_classic</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-arbres_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>Construire un arbre permettant d’expliquer <span class="math inline">\(Y\)</span> par <span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_2\)</span>. Représenter l’arbre et identifier l’éventuel problème.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On observe que l’arbre construit est un arbre de <strong>régression, pas de classification</strong>. Cela vient du fait que <span class="math inline">\(Y\)</span> est considérée par <strong>R</strong> comme une variable quantitative, il faut la convertir en facteur.</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Tout est OK maintenant !</p>
+</div></li>
+<li><p>Écrire la règle de classification ainsi que la fonction de score définies par l’arbre.</p>
+<div class="corR">
+<p>La règle de classification est</p>
+<p><span class="math display">\[\widehat g(x)=\mathbf{1}_{X_1\lt 0.44}.\]</span></p>
+<p>La fonction de score est donnée par</p>
+<p><span class="math display">\[\widehat S(x)=\widehat P(Y=1|X=x)=0.83\mathbf{1}_{X_1\lt 0.44}+0.07\mathbf{1}_{X_1\geq 0.44}.\]</span></p>
+</div></li>
+<li><p>Ajouter sur le graphe de la question 1 la partition définie par l’arbre.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+</ol>
+</section>
+<section id="entrée-qualitative" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="entrée-qualitative"><span class="header-section-number">1.1.3</span> Entrée qualitative</h3>
+<p>On considère les données</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"D"</span>),n))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Y[X<span class="sc">==</span><span class="st">"A"</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(X<span class="sc">==</span><span class="st">"A"</span>),<span class="dv">1</span>,<span class="fl">0.9</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Y[X<span class="sc">==</span><span class="st">"B"</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(X<span class="sc">==</span><span class="st">"B"</span>),<span class="dv">1</span>,<span class="fl">0.25</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Y[X<span class="sc">==</span><span class="st">"C"</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(X<span class="sc">==</span><span class="st">"C"</span>),<span class="dv">1</span>,<span class="fl">0.8</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Y[X<span class="sc">==</span><span class="st">"D"</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(X<span class="sc">==</span><span class="st">"D"</span>),<span class="dv">1</span>,<span class="fl">0.2</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Y)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>data3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X,Y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li><p>Construire un arbre permettant d’expliquer <span class="math inline">\(Y\)</span> par <span class="math inline">\(X\)</span>.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Expliquer la manière dont l’arbre est construit dans ce cadre là.</p>
+<div class="corR">
+<p>La variable étant qualitative, on ne cherche pas un seuil de coupure pour diviser un nœud en 2. On va ici considérer toutes les partitions binaires de l’ensemble <span class="math inline">\(\{A,B,C,D\}\)</span>. La meilleure partition est <span class="math inline">\(\{\{A,C\},\{B,D\}\}\)</span>.</p>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="sec-elagage-cart" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-elagage-cart"><span class="header-section-number">1.2</span> Élagage</h2>
+<p>Le procédé de coupe présenté précédemment permet de définir un très grand nombre d’arbres à partir d’un jeu de données (arbre sans coupure, avec une coupure, deux coupures…). Se pose alors la question de trouver le <strong>meilleur arbre</strong> parmi tous les arbres possibles. Une première idée serait de choisir parmi tous les arbres possibles celui qui optimise un critère de performance. Cette approche, bien que cohérente, n’est généralement pas possible à mettre en œuvre en pratique car le nombre d’arbres à considérer est souvent trop important.</p>
+<p>La méthode CART propose une procédure permettant de choisir automatiquement un arbre en 3 étapes :</p>
+<ul>
+<li>On construit un <strong>arbre maximal</strong> (très profond) <span class="math inline">\(\mathcal T_{max}\)</span> ;</li>
+<li>On sélectionne une <strong>suite d’arbres emboités</strong> : <span class="math display">\[\mathcal T_{max}=\mathcal T_0\supset\mathcal T_1\supset\dots\supset \mathcal T_K.\]</span> La sélection s’effectue en optimisant un critère <strong>Cout/complexité</strong> qui permet de réguler le compromis entre <strong>ajustement</strong> et <strong>complexité</strong> de l’arbre.</li>
+<li>On <strong>sélectionne un arbre</strong> dans cette sous-suite en optimisant un critère de performance.</li>
+</ul>
+<p>Cette approche revient à choisir un sous-arbre de l’arbre <span class="math inline">\(\mathcal T_\text{max}\)</span>, c’est-à-dire à enlever des branches à <span class="math inline">\(T_\text{max}\)</span>, c’est pourquoi on parle <strong>d’élagage</strong>.</p>
+<section id="élagage-pour-un-problème-de-régression" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="élagage-pour-un-problème-de-régression"><span class="header-section-number">1.2.1</span> Élagage pour un problème de régression</h3>
+<p>On considère les données <strong>Carseats</strong> du package <strong>ISLR</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Carseats)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Carseats)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Sales          CompPrice       Income        Advertising    
+ Min.   : 0.000   Min.   : 77   Min.   : 21.00   Min.   : 0.000  
+ 1st Qu.: 5.390   1st Qu.:115   1st Qu.: 42.75   1st Qu.: 0.000  
+ Median : 7.490   Median :125   Median : 69.00   Median : 5.000  
+ Mean   : 7.496   Mean   :125   Mean   : 68.66   Mean   : 6.635  
+ 3rd Qu.: 9.320   3rd Qu.:135   3rd Qu.: 91.00   3rd Qu.:12.000  
+ Max.   :16.270   Max.   :175   Max.   :120.00   Max.   :29.000  
+   Population        Price        ShelveLoc        Age          Education   
+ Min.   : 10.0   Min.   : 24.0   Bad   : 96   Min.   :25.00   Min.   :10.0  
+ 1st Qu.:139.0   1st Qu.:100.0   Good  : 85   1st Qu.:39.75   1st Qu.:12.0  
+ Median :272.0   Median :117.0   Medium:219   Median :54.50   Median :14.0  
+ Mean   :264.8   Mean   :115.8                Mean   :53.32   Mean   :13.9  
+ 3rd Qu.:398.5   3rd Qu.:131.0                3rd Qu.:66.00   3rd Qu.:16.0  
+ Max.   :509.0   Max.   :191.0                Max.   :80.00   Max.   :18.0  
+ Urban       US     
+ No :118   No :142  
+ Yes:282   Yes:258  
+                    
+                    
+                    
+                    </code></pre>
+</div>
+</div>
+<p>On cherche ici à expliquer la variable quantitative <strong>Sales</strong> par les autres variables.</p>
+<ol type="1">
+<li><p>Construire un arbre permettant de répondre au problème.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Expliquer les sorties de la fonction <strong>printcp</strong> appliquée à l’arbre de la question précédente et calculer le dernier terme de la colonne <strong>rel error</strong>.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On peut lire des informations sur la suite d’arbres emboîtés, cette suite est de longueur 17 ici. Dans le dernier tableau, chaque ligne représente un arbre de la suite et on a dans les colonnes :</p>
+<ul>
+<li><strong>CP</strong> : le paramètre de complexité, plus il est petit plus l’arbre est profond ;</li>
+<li><strong>nsplit</strong> : nombre de coupures de l’arbre ;</li>
+<li><strong>rel error</strong> contient l’erreur calculée sur les données d’apprentissage. Cette erreur décroit lorsque la complexité augmente et peut être interprétée comme une erreur d’ajustement ;</li>
+<li><strong>xerror</strong> : contient l’erreur calculée par validation croisée. Elle peut être interprétée comme une erreur de prévision ;</li>
+<li><strong>xstd</strong> correspond à l’écart type estimé de l’erreur.</li>
+</ul>
+<p>Les types d’erreurs dépendent du problème considéré. Vu qu’on est ici sur un problème de régression, c’est l’<strong>erreur quadratique moyenne</strong> qui est considérée. De plus ces erreurs sont normalisées par rapport à l’erreur de l’arbre racine (sans coupure). Ainsi on retrouve l’erreur demandée avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Construire une suite d’arbres plus grandes en jouant sur les paramètres <code>cp</code> et <code>minsplit</code> de la fonction <strong>rpart</strong>.</p>
+<div class="corR">
+<p>Il suffit de diminuer les valeurs par défaut de ces paramètres.</p>
+</div>
+<div class="cell" data-teacher="false" data-max.height="500px">
+
+</div>
+<div class="corR">
+<p>On obtient ici une suite de près de 300 arbres. On remarque que</p>
+<ul>
+<li>l’erreur d’ajustement ne cesse de décroître, ceci est logique vu le procédé de construction : on ajuste de mieux en mieux lorsqu’on augmente le nombre de coupures ;</li>
+<li>l’erreur de prévision décroit avant de d’augmenter à nouveau. C’est le phénomène bien connu du <strong>sur-apprentissage</strong>.</li>
+</ul>
+</div></li>
+<li><p>Expliquer la sortie de la fonction <strong>plotcp</strong> appliquée à l’arbre de la question précédente.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On obtient un graphe qui permet de visualiser l’erreur quadratique calculée par validation croisée (erreur de prévision) en fonction du paramètre <strong>cp</strong> ou <strong>nsplit</strong>.</p>
+</div></li>
+<li><p>Sélectionner le “meilleur” arbre dans la suite construite.</p>
+<div class="corR">
+<p>La manière classique revient à choisir l’arbre qui a la plus petite erreur de prévision. Cela revient à aller chercher dans le tableau de la fonction <strong>printcp</strong> l’arbre qiu possède la plus petite erreur de prévision. On peut obtenir la valeur optimale de <strong>cp</strong> avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Visualiser l’arbre choisi (utiliser la fonction <strong>prune</strong>).</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>La fonction <strong>visTree</strong> du package <strong>visNetwork</strong> permet de donner une visualisation interactive de l’arbre.</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Une <strong>application Shiny</strong> est également proposée pour visualiser les arbres</p>
+</div>
+<div class="cell">
+
+</div></li>
+<li><p>On souhaite prédire les valeurs de <span class="math inline">\(Y\)</span> pour de nouveaux individus à partir de l’arbre sélectionné. Pour simplifier on considèrera ces 4 individus :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>new_ind <span class="ot">&lt;-</span> Carseats <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">3</span>,<span class="dv">58</span>,<span class="dv">185</span>,<span class="dv">218</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Sales)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>new_ind</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    CompPrice Income Advertising Population Price ShelveLoc Age Education Urban
+3         113     35          10        269    80    Medium  59        12   Yes
+58         93     91           0         22   117       Bad  75        11   Yes
+185       132     33           7         35    97    Medium  60        11    No
+218       106     44           0        481   111    Medium  70        14    No
+     US
+3   Yes
+58   No
+185 Yes
+218  No</code></pre>
+</div>
+</div>
+<p>Calculer les valeurs prédites.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Séparer les données en un échantillon d’apprentissage de taille 250 et un échantillon test de taille 150.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>On considère la suite d’arbres définie par</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4321</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Sales<span class="sc">~</span>.,<span class="at">data=</span>train,<span class="at">cp=</span><span class="fl">0.000001</span>,<span class="at">minsplit=</span><span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dans cette suite, sélectionner</p>
+<ul>
+<li>un arbre très simple (avec 2 ou 3 coupures)</li>
+<li>un arbre très grand</li>
+<li>l’arbre optimal (avec la procédure d’élagage classique).</li>
+</ul>
+<div class="cell" data-teacher="false" data-max.height="500px">
+
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Calculer l’erreur quadratique de ces 3 arbres en utilisant l’échantillon test.</p>
+<div class="corR">
+<p>Pour chaque arbre <span class="math inline">\(T\)</span> on calcule <span class="math display">\[\frac{1}{n_\text{test}}\sum_{i\in \text{test}}(Y_i-T(X_i))^2.\]</span></p>
+<p>On définit une table qui regroupe les prédictions des 3 arbres sur l’échantillon test :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On en déduit les erreurs quadratique</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>L’arbre sélectionné a ici la plus petite erreur.</p>
+</div></li>
+<li><p>Refaire la comparaison avec une validation croisée 10 blocs.</p>
+<div class="corR">
+<p>On créé tout d’abord les blocs.</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On fait la validation croisée.</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+</ol>
+</section>
+<section id="élagage-en-classification-binaire-et-matrice-de-coût" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="élagage-en-classification-binaire-et-matrice-de-coût"><span class="header-section-number">1.2.2</span> Élagage en classification binaire et matrice de coût</h3>
+<p>On considère ici les mêmes données que précédemment mais on cherche à expliquer une version binaire de la variable <strong>Sales</strong>. Cette nouvelle variable, appelée <code>High</code> prend pour valeurs <code>No</code> si <code>Sales</code> est inférieur ou égal à 8, <code>Yes</code> sinon. On travaillera donc avec le jeu <code>data1</code> défini ci-dessous.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>High <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Carseats<span class="sc">$</span>Sales<span class="sc">&lt;=</span><span class="dv">8</span>,<span class="st">"No"</span>,<span class="st">"Yes"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> Carseats <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Sales) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(High)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li><p>Construire un arbre permettant d’expliquer <code>High</code> par les autres variables (sans <code>Sales</code> évidemment !) et expliquer les principales différences par rapport à la partie précédente précédente.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>L’arbre construit est un <strong>arbre de classification</strong>. Le procédé de découpe des noeuds est différent : il utilise l’impureté de Gini au lieu de la variance.</p>
+</div></li>
+<li><p>Expliquer l’option <code>parms</code> dans la commande :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tree1 <span class="ot">&lt;-</span> <span class="fu">rpart</span>(High<span class="sc">~</span>.,<span class="at">data=</span>data1,<span class="at">parms=</span><span class="fu">list</span>(<span class="at">split=</span><span class="st">"information"</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tree1<span class="sc">$</span>parms</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$prior
+   1    2 
+0.59 0.41 
+
+$loss
+     [,1] [,2]
+[1,]    0    1
+[2,]    1    0
+
+$split
+[1] 2</code></pre>
+</div>
+</div>
+<div class="corR">
+<p>On change de fonction d’impureté (<strong>information</strong> au lieu de <strong>Gini</strong>).</p>
+</div></li>
+<li><p>Expliquer les sorties de la fonction <strong>printcp</strong> sur le premier arbre construit et retrouver la valeur du dernier terme de la colonne <strong>rel error</strong>.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On peut lire des informations sur la suite d’arbres emboîtés, cette suite est de longueur 17 ici. Dans le dernier tableau, chaque ligne représente un arbre de la suite et on a dans les colonnes :</p>
+<ul>
+<li><strong>CP</strong> : le paramètre de complexité, plus il est petit plus l’arbre est profond ;</li>
+<li><strong>nsplit</strong> : nombre de coupures de l’arbre ;</li>
+<li><strong>rel error</strong> contient l’erreur calculée sur les données d’apprentissage. Cette erreur décroit lorsque la complexité augmente et peut être interprétée comme une erreur d’ajustement ;</li>
+<li><strong>xerror</strong> : contient l’erreur calculée par validation croisée. Elle peut être interprétée comme une erreur de prévision ;</li>
+<li><strong>xstd</strong> correspond à l’écart type estimé de l’erreur.</li>
+</ul>
+<p>Les types d’erreurs dépendent du problème considéré. Vu qu’on est ici sur un problème de classification, c’est l’<strong>erreur de classification</strong> qui est considérée. De plus ces erreurs sont normalisées par rapport à l’erreur de l’arbre racine (sans coupure). Ainsi on retrouve l’erreur demandée avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Sélectionner un arbre optimal dans la suite.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>On considère la suite d’arbres</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tree2 <span class="ot">&lt;-</span> <span class="fu">rpart</span>(High<span class="sc">~</span>.,<span class="at">data=</span>data1,<span class="at">parms=</span><span class="fu">list</span>(<span class="at">loss=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">ncol=</span><span class="dv">2</span>)),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cp=</span><span class="fl">0.01</span>,<span class="at">minsplit=</span><span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Expliquer les sorties des commandes suivantes. On pourra notamment calculer le dernier terme de la colonne <strong>rel error</strong> de la table <strong>cptable</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tree2<span class="sc">$</span>parms</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$prior
+   1    2 
+0.59 0.41 
+
+$loss
+     [,1] [,2]
+[1,]    0    1
+[2,]    5    0
+
+$split
+[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(tree2)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Classification tree:
+rpart(formula = High ~ ., data = data1, parms = list(loss = matrix(c(0, 
+    5, 1, 0), ncol = 2)), cp = 0.01, minsplit = 2)
+
+Variables actually used in tree construction:
+[1] Advertising Age         CompPrice   Education   Income      Population 
+[7] Price       ShelveLoc  
+
+Root node error: 236/400 = 0.59
+
+n= 400 
+
+         CP nsplit rel error xerror    xstd
+1  0.101695      0   1.00000 5.0000 0.20840
+2  0.050847      2   0.79661 3.8136 0.20909
+3  0.036017      3   0.74576 3.2034 0.20176
+4  0.035311      5   0.67373 3.1271 0.20038
+5  0.025424      9   0.50847 2.6144 0.19069
+6  0.016949     11   0.45763 2.3475 0.18307
+7  0.015537     16   0.37288 2.1992 0.17905
+8  0.014831     21   0.28814 2.1992 0.17905
+9  0.010593     23   0.25847 2.0466 0.17367
+10 0.010000     25   0.23729 2.0297 0.17292</code></pre>
+</div>
+</div>
+<div class="corR">
+<p>Le critère est ici modifié, on utilise une <strong>erreur de classification pondérée</strong> pour choisir l’arbre. On rappelle que l’erreur de classification est définie par <span class="math display">\[L(g)=P(g(X)\neq Y)=E[\alpha_11_{g(X)=0,Y=1}+\alpha_21_{g(X)=1,Y=0}]\]</span> avec <span class="math inline">\(\alpha_1=\alpha_2=1\)</span>. Cette erreur donne donc le même poids aux deux erreurs possible (prédire 1 à tort ou prédire 0 à tort). Utiliser cette erreur revient donc à supposer qu’elles ont la même importance pour le problème considéré. Ce n’est bien entendu pas toujours le cas en pratique. La matrice <strong>loss</strong> contient les valeurs de <span class="math inline">\(\alpha_1\)</span> et <span class="math inline">\(\alpha_2\)</span> et modifier ces valeurs permettra de donner des poids différents à ces deux erreurs.</p>
+<p>Avec cette nouvelle commande, on donne un poids de 5 pour une erreur et de 1 pour l’autre. On obtient le terme demandé avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Comparer les valeurs ajustées par les deux arbres considérés.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Il y a plus de <code>Yes</code> prédits dans le second arbre. Cela vient des changements dans la matrice loss : la perte pour prédire <code>No</code> au lieu de <code>Yes</code> est de 5 pour le second arbre. Cela signifie bien détecter les <code>Yes</code> est plus important pour cet arbre, c’est donc tout à fait normal qu’il prédise plus souvent <code>Yes</code> que le premier.</p>
+<p>Cette stratégie de changer la matrice de coût peut se révéler intéressante dans le cas de <strong>données déséquilibrées</strong> : une modalité de la cible sous-représentée par rapport à l’autre. En effet, pour de tels problèmes il est souvent très important de bien détecter la modalité sous-représentée. On pourra donc donner un poids plus fort lorsqu’on détecte mal cette modalité.</p>
+</div></li>
+</ol>
+</section>
+<section id="calcul-de-la-sous-suite-darbres-optimaux" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="calcul-de-la-sous-suite-darbres-optimaux"><span class="header-section-number">1.2.3</span> Calcul de la sous-suite d’arbres optimaux</h3>
+<div id="exr-exo-algo-cout-complexite" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 1.1 (Minimisation du critère coût/complexité) </strong></span>On considère l’algorithme qui permet de calculer les suites <span class="math inline">\((\alpha_m)_m\)</span> et <span class="math inline">\((T_{\alpha_m})_m\)</span> du théorème présenté en cours. Pour simplifier on se place en classification binaire et on considère les notations suivantes (en plus de celles présentées dans le chapitre) :</p>
+<ul>
+<li><span class="math inline">\(R(t)\)</span> : erreur de classification dans le nœud <span class="math inline">\(t\)</span> pondérée par la proportion d’individus dans le nœud (nombre d’individus dans <span class="math inline">\(t\)</span> sue le nombre total d’individus).</li>
+<li><span class="math inline">\(T^t\)</span> : la branche de l’arbre <span class="math inline">\(T\)</span> issue du nœud interne <span class="math inline">\(t\)</span>.</li>
+<li><span class="math inline">\(R(T^t)\)</span> : l’erreur de la branche <span class="math inline">\(T^t\)</span> pondérée par la proportion d’individus dans le nœud.</li>
+</ul>
+<p>L’algorithme suivant présente le calcul explicite des suites <span class="math inline">\((\alpha_m)_m\)</span> et <span class="math inline">\((T_{\alpha_m})_m\)</span>.</p>
+<div class="algo">
+<p><strong>Initialisation</strong> : on pose <span class="math inline">\(\alpha_0=0\)</span> et on calcule l’arbre maximale <span class="math inline">\(T_0\)</span> qui minimise <span class="math inline">\(C_0(T)\)</span>. On fixe <span class="math inline">\(m=0\)</span>. Répéter jusqu’à obtenir l’arbre racine</p>
+<ol type="1">
+<li>Calculer pour tous les nœuds <span class="math inline">\(t\)</span> internes de <span class="math inline">\(T_{\alpha_m}\)</span> <span class="math display">\[g(t)=\frac{R(t)-R(T_{\alpha_m}^t)}{|{T_{\alpha_m}^t}|-1}\]</span></li>
+<li>Choisir le nœud interne <span class="math inline">\(t_m\)</span> qui minimise <span class="math inline">\(g(t)\)</span>.</li>
+<li>On pose <span class="math display">\[\alpha_{m+1}=g(t_m)\quad\text{et}\quad T_{\alpha_{m+1}}=T_{\alpha_m}-T_{\alpha_m}^{t_m}.\]</span></li>
+<li>Mise à jour : <span class="math inline">\(m:=m+1\)</span>.</li>
+</ol>
+<p><strong>Retourner</strong> : les suites finies <span class="math inline">\((\alpha_m)_m\)</span> et <span class="math inline">\((T_{\alpha_m})_m\)</span>.</p>
+</div>
+<p>On propose d’utiliser cet algorithme sur l’arbre construit suivant</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>gen_class_bin2D <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>,<span class="at">graine=</span><span class="dv">1234</span>,<span class="at">bayes=</span><span class="fl">0.1</span>){</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(graine)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  grille <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  X1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  X2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,n)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  cond0 <span class="ot">&lt;-</span> (X1<span class="sc">&gt;</span><span class="fl">0.2</span> <span class="sc">&amp;</span> X2<span class="sc">&gt;=</span><span class="fl">0.8</span>) <span class="sc">|</span> (X1<span class="sc">&gt;</span><span class="fl">0.6</span> <span class="sc">&amp;</span> X2<span class="sc">&lt;</span><span class="fl">0.4</span>) <span class="sc">|</span> (X1<span class="sc">&lt;</span><span class="fl">0.25</span> <span class="sc">&amp;</span> X2<span class="sc">&lt;</span><span class="fl">0.5</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  cond1 <span class="ot">&lt;-</span> <span class="sc">!</span>cond0</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  Y[cond0] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(cond0),<span class="dv">1</span>,bayes)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  Y[cond1] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">sum</span>(cond1),<span class="dv">1</span>,<span class="dv">1</span><span class="sc">-</span>bayes)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  donnees <span class="ot">&lt;-</span> <span class="fu">tibble</span>(X1,X2,<span class="at">Y=</span><span class="fu">as.factor</span>(Y))</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a> <span class="co"># indapp &lt;- 1:napp</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  dapp &lt;- donnees[indapp,]</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  dtest &lt;- donnees[-indapp,]</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  px1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">by=</span>grille)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  px2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">by=</span>grille)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  px <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X1=</span>px1,<span class="at">X2=</span>px2)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  py <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">nrow</span>(px))</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  cond0 <span class="ot">&lt;-</span> (px[,<span class="dv">1</span>]<span class="sc">&gt;</span><span class="fl">0.2</span> <span class="sc">&amp;</span> px[,<span class="dv">2</span>]<span class="sc">&gt;=</span><span class="fl">0.8</span>) <span class="sc">|</span> (px[,<span class="dv">1</span>]<span class="sc">&gt;</span><span class="fl">0.6</span> <span class="sc">&amp;</span> px[,<span class="dv">2</span>]<span class="sc">&lt;</span><span class="fl">0.4</span>) <span class="sc">|</span> (px[,<span class="dv">1</span>]<span class="sc">&lt;</span><span class="fl">0.25</span> <span class="sc">&amp;</span> px[,<span class="dv">2</span>]<span class="sc">&lt;</span><span class="fl">0.5</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  cond1 <span class="ot">&lt;-</span> <span class="sc">!</span>cond0</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  py[cond0] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  py[cond1] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Y=</span><span class="fu">as.factor</span>(py))</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">fill=</span>Y)<span class="sc">+</span><span class="fu">geom_raster</span>(<span class="at">hjust=</span><span class="dv">1</span>,<span class="at">vjust=</span><span class="dv">1</span>)<span class="co">#+theme(legend.position='none')</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">donnees=</span>donnees,<span class="at">graphe=</span>p))</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>don<span class="fl">.2</span>D.arbre <span class="ot">&lt;-</span> <span class="fu">gen_class_bin2D</span>(<span class="at">n=</span><span class="dv">150</span>,<span class="at">graine=</span><span class="dv">3210</span>,<span class="at">bayes=</span><span class="fl">0.05</span>)<span class="sc">$</span>donnees</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>T0 <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Y<span class="sc">~</span>.,<span class="at">data=</span>don<span class="fl">.2</span>D.arbre)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(T0,<span class="at">extra =</span> <span class="dv">1</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="01-arbres_files/figure-html/arbre-T0-algo-elagage-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">L’arbre <span class="math inline">\(T_0\)</span>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cet arbre n’est pas l’arbre maximal mais la manière d’élaguer est identique.</p>
+<ol type="1">
+<li><p>Calculer pour les 5 nœuds internes de <span class="math inline">\(T_0\)</span> la fonction <span class="math inline">\(g(t)\)</span>.</p>
+<div class="corR">
+<p>On numérote les nœuds internes de haut en bas et de gauche à droite. On commence par le nœud <span class="math inline">\(t_5\)</span>, celui qui correspond à la coupure <code>X1&gt;=0.31</code>. On a <span class="math display">\[R(t_5)=\frac{4}{23}\ \frac{23}{150}=\frac{4}{150}\quad\text{et}\quad R(T_0^{t_5})=\frac{3}{23}\ \frac{23}{150}=\frac{3}{150}.\]</span> On déduit <span class="math display">\[g(t_5)=\frac{4/150-3/150}{2-1}=\frac{1}{150}.\]</span> On fait de même pour les 4 autres nœuds internes et on obtient les résultats suivants :</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">t</th>
+<th style="text-align: center;"><span class="math inline">\(t_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(R(t)\)</span></td>
+<td style="text-align: center;">65/150</td>
+<td style="text-align: center;">20/150</td>
+<td style="text-align: center;">22/150</td>
+<td style="text-align: center;">12/150</td>
+<td style="text-align: center;">4/150</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(R(T_0^{t})\)</span></td>
+<td style="text-align: center;">8/150</td>
+<td style="text-align: center;">2/150</td>
+<td style="text-align: center;">6/150</td>
+<td style="text-align: center;">1/150</td>
+<td style="text-align: center;">3/150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(|{T_0^t}|\)</span></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(g(t)\)</span></td>
+<td style="text-align: center;">11.4/150</td>
+<td style="text-align: center;">9/150</td>
+<td style="text-align: center;">8/150</td>
+<td style="text-align: center;">11/150</td>
+<td style="text-align: center;">1/150</td>
+</tr>
+</tbody>
+</table>
+</div></li>
+<li><p>En déduire la valeur de <span class="math inline">\(\alpha_1\)</span> ainsi que l’arbre <span class="math inline">\(T_{\alpha_1}\)</span>.</p>
+<div class="corR">
+<p><span class="math inline">\(g(t)\)</span> est minimum en <span class="math inline">\(t_5\)</span> On a donc <span class="math inline">\(\alpha_1=g(t_5)\)</span> et <span class="math inline">\(T_{\alpha_1}=T_0-T_0^{t_5}\)</span>, c’est-à-dire <span class="math inline">\(T_0\)</span> auquel on enlève la coupure <code>X1&gt;=0.31</code>.</p>
+</div></li>
+<li><p>Retrouver cette valeur en utilisant la fonction <code>printcp</code> et représenter l’arbre <span class="math inline">\(T_1\)</span> en utilisant <code>prune</code>.</p>
+<div class="corR">
+<p>On se rappelle que <code>printcp</code> normalise toutes les erreurs par rapport à celle de l’arbre racine, par conséquent la valeur de <span class="math inline">\(\alpha_1\)</span> affichée par <code>printcp</code> sera <span class="math display">\[\frac{1}{150} \, \frac{150}{65}=\frac{1}{65}\approx 0.01538.\]</span> En effet :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Et on peut visualiser l’arbre avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+<li><p>Faire le même travail pour calculer <span class="math inline">\(\alpha_2\)</span> et <span class="math inline">\(T_{\alpha_2}\)</span>.</p>
+<div class="corR">
+<p>On se place maintenant dans <span class="math inline">\(T_{\alpha_1}\)</span> qui contient 4 nœuds internes et on calcule <span class="math inline">\(g(t)\)</span> pour ces 4 nœuds :</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">t</th>
+<th style="text-align: center;"><span class="math inline">\(t_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t_4\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(R(t)\)</span></td>
+<td style="text-align: center;">65/150</td>
+<td style="text-align: center;">20/150</td>
+<td style="text-align: center;">22/150</td>
+<td style="text-align: center;">12/150</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(R(T_{\alpha_1}^t)\)</span></td>
+<td style="text-align: center;">9/150</td>
+<td style="text-align: center;">18/150</td>
+<td style="text-align: center;">7/150</td>
+<td style="text-align: center;">1/150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(|{T_{\alpha_1}^t}|\)</span></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(g(t)\)</span></td>
+<td style="text-align: center;">14/150</td>
+<td style="text-align: center;">9/150</td>
+<td style="text-align: center;">15/150</td>
+<td style="text-align: center;">11/150</td>
+</tr>
+</tbody>
+</table>
+<p>On supprimera ici <span class="math inline">\(t_2\)</span> avec on posera <span class="math inline">\(\alpha_2=9/65\approx 0.13846\)</span> (on normalise). On peut tracer <span class="math inline">\(T_{\alpha_2}\)</span> :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div></li>
+</ol>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-brfrolst84" class="csl-entry" role="doc-biblioentry">
+Breiman, L., J. Friedman, R. Olshen, et C. Stone. 1984. <em>Classification and regression trees</em>. Wadsworth &amp; Brooks.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Présentation</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02-forets.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
