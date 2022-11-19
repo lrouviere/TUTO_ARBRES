@@ -258,9 +258,10 @@ div.csl-indent {
     <h2 id="toc-title">Table des matières</h2>
    
   <ul>
-  <li><a href="#un-exemple-simple-en-régression" id="toc-un-exemple-simple-en-régression" class="nav-link active" data-scroll-target="#un-exemple-simple-en-régression"> <span class="header-section-number">3.1</span> Un exemple simple en régression</a></li>
-  <li><a href="#adaboost-et-logitboost-pour-la-classification-binaire." id="toc-adaboost-et-logitboost-pour-la-classification-binaire." class="nav-link" data-scroll-target="#adaboost-et-logitboost-pour-la-classification-binaire."> <span class="header-section-number">3.2</span> Adaboost et logitboost pour la classification binaire.</a></li>
+  <li><a href="#sec-sinusgbm" id="toc-sec-sinusgbm" class="nav-link active" data-scroll-target="#sec-sinusgbm"> <span class="header-section-number">3.1</span> Un exemple simple en régression</a></li>
+  <li><a href="#sec-gbmspam" id="toc-sec-gbmspam" class="nav-link" data-scroll-target="#sec-gbmspam"> <span class="header-section-number">3.2</span> Adaboost et logitboost pour la classification binaire.</a></li>
   <li><a href="#comparaison-de-méthodes" id="toc-comparaison-de-méthodes" class="nav-link" data-scroll-target="#comparaison-de-méthodes"> <span class="header-section-number">3.3</span> Comparaison de méthodes</a></li>
+  <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost"> <span class="header-section-number">3.4</span> Xgboost</a></li>
   </ul>
 </nav>
     </div>
@@ -332,8 +333,8 @@ div.correction {
 <p><strong>Sortie</strong> : la suite <span class="math inline">\((g_m(x))_m\)</span>.</p>
 </div>
 <p>Sur <strong>R</strong> On peut utiliser différents packages pour faire du gradient boosting. Nous utilisons ici le package <strong>gbm</strong> <span class="citation" data-cites="rid06">(<a href="references.html#ref-rid06" role="doc-biblioref">Ridgeway 2006</a>)</span>.</p>
-<section id="un-exemple-simple-en-régression" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="un-exemple-simple-en-régression"><span class="header-section-number">3.1</span> Un exemple simple en régression</h2>
+<section id="sec-sinusgbm" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-sinusgbm"><span class="header-section-number">3.1</span> Un exemple simple en régression</h2>
 <p>On considère un jeu de données <span class="math inline">\((x_i,y_i),i=1,\dots,200\)</span> issu d’un modèle de régression <span class="math display">\[y_i=m(x_i)+\varepsilon_i\]</span> où la vraie fonction de régression est la fonction <strong>sinus</strong> (mais on va faire comme si on ne le savait pas).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi,<span class="at">by=</span><span class="fl">0.01</span>)</span>
@@ -384,8 +385,8 @@ div.correction {
 </div></li>
 </ol>
 </section>
-<section id="adaboost-et-logitboost-pour-la-classification-binaire." class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="adaboost-et-logitboost-pour-la-classification-binaire."><span class="header-section-number">3.2</span> Adaboost et logitboost pour la classification binaire.</h2>
+<section id="sec-gbmspam" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-gbmspam"><span class="header-section-number">3.2</span> Adaboost et logitboost pour la classification binaire.</h2>
 <p>On considère le jeu de données <strong>spam</strong> du package <strong>kernlab</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
@@ -512,9 +513,248 @@ div.correction {
 
 </div></li>
 </ol>
+</section>
+<section id="xgboost" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="xgboost"><span class="header-section-number">3.4</span> Xgboost</h2>
+<p>L’algorithme <strong>xgboost</strong> <span class="citation" data-cites="Chen2016">Chen et Guestrin (<a href="references.html#ref-Chen2016" role="doc-biblioref">2016</a>)</span> va plusloin que le <strong>gradient boosting</strong> en minimisant une approximation à l’odre 2 de la fonction de perte et en ajoutant un terme de régularisation dans la fonction objectif. On cherche toujours des combinaisons d’arbres</p>
+<p><span class="math display">\[f_b(x)=f_{b-1}(x)+h_b(x)\quad\text{où}\quad h_b(x)=w_{q(x)}\]</span></p>
+<p>est un arbre à <span class="math inline">\(T\)</span> feuilles : <span class="math inline">\(w\in\mathbb R^T\)</span> et <span class="math inline">\(q:\mathbb R^d\to\{1,2,\dots,T\}\)</span>. À l’étape <span class="math inline">\(b\)</span>, on cherche l’arbre qui minimise la <strong>fonction objectif</strong> de la forme</p>
+<p><span class="math display">\[
+    \begin{aligned}
+      \text{obj}^{(b)}= &amp; \sum_{i=1}^n\ell(y_i,f_b(x_i))+\sum_{j=1}^b\Omega(h_j) \\
+      = &amp; \sum_{i=1}^n\ell(y_i,f_{b-1}(x_i)+h_b(x_i))+\sum_{j=1}^b\Omega(h_j)
+    \end{aligned}
+\]</span></p>
+<p>où <span class="math inline">\(\Omega(h_j)\)</span> est un terme de <strong>régularisation</strong> qui va pénaliser <span class="math inline">\(h_j\)</span> en fonction de son nombre de feuilles <span class="math inline">\(T\)</span> et des valeurs prédites <span class="math inline">\(w\)</span>. Un développement limité à l’ordre 2 permet d’approcher cette fonction par</p>
+<p><span class="math display">\[\text{obj}^{(b)}=\sum_{i=1}^n[\ell_i^{(1)}h_b(x_i)+\frac{1}{2}\ell_i^{(2)}h_b^2(x_i)]+\Omega(h_b)+\text{constantes},\]</span> avec</p>
+<p><span class="math display">\[\ell_i^{(1)}=\frac{\partial \ell(y_i,f(x))}{\partial f(x)}(f_{b-1}(x_i))\quad\text{et}\quad \ell_i^{(2)}=\frac{\partial^2 \ell(y_i,f(x))}{\partial f(x)^2}(f_{b-1}(x_i)).\]</span> Pour les arbres, la fonction de régularisation a la forme suivante :</p>
+<p><span class="math display">\[\Omega(h)=\Omega(T,w)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^Tw_j,\]</span> où <span class="math inline">\(\gamma\)</span> et <span class="math inline">\(\lambda\)</span> contrôlent le <strong>poids</strong> que l’on donne aux paramètres de l’arbre. On obtient au final l’algorithme suivant</p>
+<div class="algo">
+<ol type="1">
+<li><p>Initialisation <span class="math inline">\(f_0=h_0\)</span>.</p></li>
+<li><p>Pour <span class="math inline">\(b=1,\dots,B\)</span></p>
+<ol type="a">
+<li><p>Ajuster un arbre <span class="math inline">\(h_b\)</span> à <span class="math inline">\(T\)</span> feuilles qui minimise <span class="math display">\[\sum_{i=1}^n[\ell_i^{(1)}h_b(x_i)+\frac{1}{2}\ell_i^{(2)}h_b^2(x_i)]+\gamma T+\frac{1}{2}\lambda\sum_{j=1}^Tw_j.\]</span></p></li>
+<li><p>Mettre à jour <span class="math display">\[f_b(x)=f_{b-1}(x)+h_b(x).\]</span></p></li>
+</ol></li>
+<li><p>Sortie : la suite d’algorithmes <span class="math inline">\((f_b)_b\)</span>.</p></li>
+</ol>
+</div>
+<p>On pourra trouver plus de précisions ici : <a href="https://xgboost.readthedocs.io/en/stable/tutorials/index.html" class="uri">https://xgboost.readthedocs.io/en/stable/tutorials/index.html</a></p>
+<div id="exr-egboost-sinus" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 3.1 (Prise en main des principales fonction de xgboost) </strong></span>On commence par charger le package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>et on reprend les données sur le <strong>sinus</strong> de la <a href="#sec-sinusgbm"><span>Section&nbsp;3.1</span></a> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi,<span class="at">by=</span><span class="fl">0.01</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">200</span>,<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">sin</span>(X)<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="at">sd=</span><span class="fl">0.2</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X,Y)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X=</span>x,<span class="at">Y=</span>y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La fonction <code>xgboost</code> requiert que les données possèdent la classe <code>xgb.DMatrix</code>, on peut l’obtenir avec</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X_mat <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="fu">as.matrix</span>(df1[,<span class="dv">1</span>]),<span class="at">label=</span>df1<span class="sc">$</span>Y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li><p>Expliquer la sortie</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>boost1 <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data=</span>X_mat,<span class="at">nrounds =</span> <span class="dv">5</span>,<span class="at">params=</span><span class="fu">list</span>(<span class="at">objective=</span><span class="st">"reg:squarederror"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-rmse:0.633250 
+[2] train-rmse:0.468674 
+[3] train-rmse:0.354599 
+[4] train-rmse:0.275842 
+[5] train-rmse:0.224803 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>boost1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##### xgb.Booster
+raw: 16.4 Kb 
+call:
+  xgb.train(params = params, data = dtrain, nrounds = nrounds, 
+    watchlist = watchlist, verbose = verbose, print_every_n = print_every_n, 
+    early_stopping_rounds = early_stopping_rounds, maximize = maximize, 
+    save_period = save_period, save_name = save_name, xgb_model = xgb_model, 
+    callbacks = callbacks)
+params (as set within xgb.train):
+  objective = "reg:squarederror", validate_parameters = "TRUE"
+xgb.attributes:
+  niter
+callbacks:
+  cb.print.evaluation(period = print_every_n)
+  cb.evaluation.log()
+niter: 5
+nfeatures : 1 
+evaluation_log:
+ iter train_rmse
+    1  0.6332497
+    2  0.4686737
+    3  0.3545990
+    4  0.2758424
+    5  0.2248031</code></pre>
+</div>
+</div>
+<div class="corR">
+<p>On a ici entraîné <code>xgboost</code> avec la fonction de perte quadratique et 5 itérations.</p>
+</div></li>
+<li><p>Faire la même chose avec 100 itération et un <code>learning rate</code> de 0.1.</p>
+<div class="cell">
+
+</div></li>
+<li><p>On peut obtenir les valeurs prédites entre <span class="math inline">\(-2\pi\)</span> et <span class="math inline">\(2\pi\)</span> pour 100 itérations avec</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Xtest <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df2<span class="sc">$</span>X)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prev100 <span class="ot">&lt;-</span> <span class="fu">predict</span>(boost2,<span class="at">newdata=</span>Xtest,<span class="at">iterationrange =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">101</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Tracer les estimateurs <strong>xgboost</strong> pour 1 itération, 10 itérations et 100 itérations. Commenter.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>Comme pour le gradient boosting, l’algorithme sous-apprend si le nombre d’arbres est trop petit et sur-apprend lorsqu’il est trop grand.</p>
+</div></li>
+<li><p>Commenter la sortie</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sel.xgb <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> X_mat,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nrounds =</span> <span class="dv">100</span>, <span class="at">objective =</span> <span class="st">"reg:squarederror"</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">eval_metric =</span> <span class="st">"rmse"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nfold=</span><span class="dv">5</span>,<span class="at">eta=</span><span class="fl">0.1</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_stopping_rounds=</span><span class="dv">10</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">verbose=</span><span class="cn">FALSE</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>sel.xgb<span class="sc">$</span>evaluation_log <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   iter train_rmse_mean train_rmse_std test_rmse_mean test_rmse_std
+1:    1       0.7894653    0.012973111      0.7906004    0.05513590
+2:    2       0.7189852    0.011889426      0.7228767    0.05364182
+3:    3       0.6556685    0.010877136      0.6607388    0.05284791
+4:    4       0.5985454    0.010104324      0.6055111    0.05240736
+5:    5       0.5471973    0.009379501      0.5567722    0.05117564
+6:    6       0.5007942    0.008971210      0.5129458    0.04971156</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(ite.opt.xgb <span class="ot">&lt;-</span> sel.xgb<span class="sc">$</span>best_iteration)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sel.xgb<span class="sc">$</span>niter</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 37</code></pre>
+</div>
+</div>
+<div class="corR">
+<p>On effectue une validation croisée 5 blocs pour choisir le nombre d’itérations. L’argument <code>early_stopping_rounds=10</code> permet de stopper l’algorithme lorsque l’erreur de prévision commence à trop remonter.</p>
+</div></li>
+<li><p>Tracer les prévisions pour l’algorithme sélectionné.</p>
+<div class="cell" data-teacher="false">
+
+</div></li>
+</ol>
+</div>
+<div id="exr-xgboostspam" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 3.2 (Xgboost sur les données spam) </strong></span>On reprend les données spam de la <a href="#sec-gbmspam"><span>Section&nbsp;3.2</span></a>. Entraîner un algorithme <strong>xgboost</strong> avec la fonction de perte <code>binary:logistic</code> et en sélectionnant la nombre d’itérations par validation croisée en optimisant l’AUC. <strong>Attention</strong> cette fonction de perte requiert que la variable à expliquer prenne pour valeurs 0 ou 1 en classe <code>numeric</code>.</p>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On teste la fonction <code>xgboost</code> pour voir si les donées sont au bon format.</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On peut maintenant faire la valisation croisée :</p>
+</div>
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-40_ea7977d7d6d86424eed2b93acada1b63">
+
+</div>
+<div class="corR">
+<p>On récupère les prévisions issues de la validation croisée</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>pour tracer la courbe ROC et calculer l’AUC :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+</div>
+<div id="exr-xgboosttidy" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercice 3.3 (Sélection avec tidymodels) </strong></span>Refaire l’exercice précédent avec la syntaxe <code>tidymodels</code>. On choisira notamment :</p>
+<ul>
+<li><p>la profondeur des arbres dans le vecteur</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">10</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>le nombre d’itérations entre 1 et 500 avec un <code>early_stopping</code> toujours égal à 10 et un learning rate à 0.05.</p></li>
+</ul>
+<p>On pourra consulter la page <a href="https://www.tidymodels.org/find/parsnip/" class="uri">https://www.tidymodels.org/find/parsnip/</a> pour trouver les noms de paramètre du <code>worfklow</code> et sur le tutoriel <a href="https://juliasilge.com/blog/shelter-animals/" class="uri">https://juliasilge.com/blog/shelter-animals/</a> pour la stratégie. Elle est ici de fixer le nombre d’itérations à 500 puisqu’on utilise le <strong>early stopping</strong> en séparant les données en 2. On initialisera donc le workflow avec</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boost_tree</span>(<span class="at">tree_depth=</span><span class="fu">tune</span>(),<span class="at">trees=</span><span class="dv">500</span>,<span class="at">learn_rate=</span><span class="fl">0.05</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">stop_iter=</span><span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>,<span class="at">validation=</span><span class="fl">0.2</span>) </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tune_spec) <span class="sc">|&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(type <span class="sc">~</span> .)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="corR">
+<p>On définit la grille de paramètres et le ré-échantillonnage :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On fait la validation croisée :</p>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="corR">
+<p>On visualise les résultats et on choisit la meilleure valeur :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On finit en entraînant l’algorithme sur toute les données pur la valeur choisie :</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On peut retrouver le nombre d’itérations sélectionnés par <strong>early stopping</strong> avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On visualise enfin l’importance des variables avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Chen2016" class="csl-entry" role="doc-biblioentry">
+Chen, T., et C. Guestrin. 2016. <span>«&nbsp;<span>XGBoost</span>: A Scalable Tree Boosting System&nbsp;»</span>. In <em>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</em>, 785‑94. KDD ’16. New York, NY, USA: ACM. <a href="https://doi.org/10.1145/2939672.2939785">https://doi.org/10.1145/2939672.2939785</a>.
+</div>
 <div id="ref-fri01" class="csl-entry" role="doc-biblioentry">
 Friedman, J. H. 2001. <span>«&nbsp;Greedy Function Approximation: A Gradient Boosting Machine&nbsp;»</span>. <em>Annals of Statistics</em> 29: 1189‑1232.
 </div>
