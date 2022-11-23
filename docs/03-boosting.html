@@ -355,7 +355,7 @@ div.correction {
 <div class="corR">
 <p>Il s’agit de l’algorithme de gradient boosting présenté ci-dessus appliqué à la fonction de perte <span class="math display">\[\ell(y,f(x))=\frac{1}{2}(y-f(x))^2.\]</span></p>
 </div></li>
-<li><p>A l’aide de la fonction <strong>gbm</strong> du package <strong>gbm</strong> construire un algorithme de <span class="math inline">\(L_2\)</span>-boosting. On utilisera 500000 itérations et gardera les autres valeurs par défaut de paramètres.</p>
+<li><p>A l’aide de la fonction <strong>gbm</strong> du package <strong>gbm</strong> construire un algorithme de <span class="math inline">\(L_2\)</span>-boosting. On utilisera 500000 itérations et gardera les autres valeurs par défaut de paramètres, à l’exception de <code>bag.fraction</code> qu’on prendra égal à 1.</p>
 <div class="cell" data-teacher="false">
 
 </div></li>
@@ -380,7 +380,11 @@ div.correction {
 <div class="corR">
 <p>On propose de faire une validation hold out. C’est assez facile avec <strong>gbm</strong> il suffit de renseigner l’option <code>train.fraction</code> de <strong>gbm</strong>.</p>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-7_a8dc6b99c11a9ffb97720e237060e773">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-7_ec92b4d1956ba435b88483af15d2bb44">
+
+</div></li>
+<li><p>Représenter l’estimateur sélectionné.</p>
+<div class="cell" data-teacher="false">
 
 </div></li>
 </ol>
@@ -395,7 +399,7 @@ div.correction {
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>spam <span class="ot">&lt;-</span> spam[<span class="fu">sample</span>(<span class="fu">nrow</span>(spam)),]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
-<li><p>Exécuter la commande</p>
+<li><p>Exécuter la commande et commenter la sortie.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_ada1 <span class="ot">&lt;-</span> <span class="fu">gbm</span>(type<span class="sc">~</span>.,<span class="at">data=</span>spam,<span class="at">distribution=</span><span class="st">"adaboost"</span>,<span class="at">interaction.depth=</span><span class="dv">2</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">shrinkage=</span><span class="fl">0.05</span>,<span class="at">n.trees=</span><span class="dv">500</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -467,10 +471,10 @@ div.correction {
 <li><p>l’algorithme <strong>logitboost</strong> en sélectionnant le nombre d’itérations par validation croisée</p></li>
 <li><p>une <strong>forêt aléatoire</strong> avec les paramètres par défaut</p></li>
 </ul>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-15_5ef0f9b5c745715aac5e056fa4082c1f">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-16_e047b5fc9f315aa5da540628c13e7d50">
 
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-16_35f7bba0224fff303d59b521388c1650">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-17_1f6b332d807d5bcac8ce00b6f99ae30d">
 
 </div>
 <div class="cell" data-teacher="false">
@@ -494,7 +498,7 @@ div.correction {
 <div class="corR">
 <p>Avec une validation croisée plutôt qu’un simple découpage apprentissage/test.</p>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-22_8ef274aa146d1b34038c01edb5361196">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-23_318530916d38384eebdd8f27d1bb9f1f">
 
 </div>
 <div class="cell">
@@ -528,7 +532,7 @@ div.correction {
 <p>où <span class="math inline">\(\Omega(h_j)\)</span> est un terme de <strong>régularisation</strong> qui va pénaliser <span class="math inline">\(h_j\)</span> en fonction de son nombre de feuilles <span class="math inline">\(T\)</span> et des valeurs prédites <span class="math inline">\(w\)</span>. Un développement limité à l’ordre 2 permet d’approcher cette fonction par</p>
 <p><span class="math display">\[\text{obj}^{(b)}=\sum_{i=1}^n[\ell_i^{(1)}h_b(x_i)+\frac{1}{2}\ell_i^{(2)}h_b^2(x_i)]+\Omega(h_b)+\text{constantes},\]</span> avec</p>
 <p><span class="math display">\[\ell_i^{(1)}=\frac{\partial \ell(y_i,f(x))}{\partial f(x)}(f_{b-1}(x_i))\quad\text{et}\quad \ell_i^{(2)}=\frac{\partial^2 \ell(y_i,f(x))}{\partial f(x)^2}(f_{b-1}(x_i)).\]</span> Pour les arbres, la fonction de régularisation a la forme suivante :</p>
-<p><span class="math display">\[\Omega(h)=\Omega(T,w)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^Tw_j,\]</span> où <span class="math inline">\(\gamma\)</span> et <span class="math inline">\(\lambda\)</span> contrôlent le <strong>poids</strong> que l’on donne aux paramètres de l’arbre. On obtient au final l’algorithme suivant</p>
+<p><span class="math display">\[\Omega(h)=\Omega(T,w)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^Tw_j^2,\]</span> où <span class="math inline">\(\gamma\)</span> et <span class="math inline">\(\lambda\)</span> contrôlent le <strong>poids</strong> que l’on donne aux paramètres de l’arbre. On obtient au final l’algorithme suivant</p>
 <div class="algo">
 <ol type="1">
 <li><p>Initialisation <span class="math inline">\(f_0=h_0\)</span>.</p></li>
@@ -611,7 +615,7 @@ evaluation_log:
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Xtest <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df2<span class="sc">$</span>X)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prev100 <span class="ot">&lt;-</span> <span class="fu">predict</span>(boost2,<span class="at">newdata=</span>Xtest,<span class="at">iterationrange =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">101</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Tracer les estimateurs <strong>xgboost</strong> pour 1 itération, 10 itérations et 100 itérations. Commenter.</p>
+<p>Tracer les estimateurs <strong>xgboost</strong> pour 1 itération, 20 itérations et 100 itérations. Commenter.</p>
 <div class="cell" data-teacher="false">
 
 </div>
@@ -672,7 +676,7 @@ evaluation_log:
 <div class="corR">
 <p>On peut maintenant faire la valisation croisée :</p>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-40_ea7977d7d6d86424eed2b93acada1b63">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-41_1a85741b6dd394d135841864ad413278">
 
 </div>
 <div class="corR">
@@ -699,15 +703,16 @@ evaluation_log:
 </ul>
 <p>On pourra consulter la page <a href="https://www.tidymodels.org/find/parsnip/" class="uri">https://www.tidymodels.org/find/parsnip/</a> pour trouver les noms de paramètre du <code>worfklow</code> et sur le tutoriel <a href="https://juliasilge.com/blog/shelter-animals/" class="uri">https://juliasilge.com/blog/shelter-animals/</a> pour la stratégie. Elle est ici de fixer le nombre d’itérations à 500 puisqu’on utilise le <strong>early stopping</strong> en séparant les données en 2. On initialisera donc le workflow avec</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boost_tree</span>(<span class="at">tree_depth=</span><span class="fu">tune</span>(),<span class="at">trees=</span><span class="dv">500</span>,<span class="at">learn_rate=</span><span class="fl">0.05</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">stop_iter=</span><span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>,<span class="at">validation=</span><span class="fl">0.2</span>) </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tune_spec) <span class="sc">|&gt;</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(type <span class="sc">~</span> .)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boost_tree</span>(<span class="at">tree_depth=</span><span class="fu">tune</span>(),<span class="at">trees=</span><span class="dv">500</span>,<span class="at">learn_rate=</span><span class="fl">0.05</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">stop_iter=</span><span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>,<span class="at">validation=</span><span class="fl">0.2</span>) </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tune_spec) <span class="sc">|&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(type <span class="sc">~</span> .)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="corR">
 <p>On définit la grille de paramètres et le ré-échantillonnage :</p>
