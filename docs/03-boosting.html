@@ -465,6 +465,19 @@ div.correction {
 <div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/cv-ada1_88045940aff92fa874a2c6403cc6dede">
 
 </div></li>
+<li><p>Pour l’estimateur sélectionné, calculer la prévision (label et probabilité d’être un spam) de l’individu suivant :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>xnew <span class="ot">&lt;-</span> spam[<span class="dv">1000</span>,<span class="sc">-</span><span class="dv">58</span>]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="corR">
+<p>On obtient la probabilité d’être spam avec</p>
+</div>
+<div class="cell" data-teacher="false">
+
+</div>
+<div class="corR">
+<p>On prédira donc <code>nonspam</code>.</p>
+</div></li>
 <li><p>Faire la même procédure en changeant la valeur du paramètre <strong>shrinkage</strong> (par exemple 0.05 et 0.5). Interpréter.</p>
 <div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/cv-ada2_a688141cd145b9cf4215bfecff45d62e">
 
@@ -488,10 +501,10 @@ div.correction {
 <h2 data-number="3.3" class="anchored" data-anchor-id="comparaison-de-méthodes"><span class="header-section-number">3.3</span> Comparaison de méthodes</h2>
 <p>On reprend les données <code>spam</code> de l’exercice précédent et on les coupe en un échantillon d’apprentissage pour entraîner les algorithmes et un échantillon test pour les comparer :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>perm <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(spam))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>app <span class="ot">&lt;-</span> spam[perm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3000</span>],]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> spam[<span class="sc">-</span>perm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3000</span>],]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>perm <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(spam))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>app <span class="ot">&lt;-</span> spam[perm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3000</span>],]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> spam[<span class="sc">-</span>perm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3000</span>],]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li><p>Sur les données d’apprentissage uniquement, entraîner</p>
@@ -502,38 +515,38 @@ div.correction {
 <li><p>un <strong>arbre CART</strong></p></li>
 </ul>
 <div class="cell" data-hint="true">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>app1 <span class="ot">&lt;-</span> app <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">type=</span><span class="fu">as.numeric</span>(type)<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_ada <span class="ot">&lt;-</span> <span class="fu">gbm</span>(type<span class="sc">~</span>.,<span class="at">data=</span>app1,...)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>nb_ada <span class="ot">&lt;-</span> <span class="fu">gbm.perf</span>(...)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>app1 <span class="ot">&lt;-</span> app <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">type=</span><span class="fu">as.numeric</span>(type)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_ada <span class="ot">&lt;-</span> <span class="fu">gbm</span>(type<span class="sc">~</span>.,<span class="at">data=</span>app1,...)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>nb_ada <span class="ot">&lt;-</span> <span class="fu">gbm.perf</span>(...)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-23_a35340fe0c4c039bf8150715b03dd339">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-25_c49d5d0f92dde641bbcdf032f81783ea">
 
 </div>
 <div class="cell" data-hint="true">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_logit <span class="ot">&lt;-</span> <span class="fu">gbm</span>(type<span class="sc">~</span>.,<span class="at">data=</span>app1,...)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nb_logit <span class="ot">&lt;-</span> <span class="fu">gbm.perf</span>(...)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model_logit <span class="ot">&lt;-</span> <span class="fu">gbm</span>(type<span class="sc">~</span>.,<span class="at">data=</span>app1,...)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>nb_logit <span class="ot">&lt;-</span> <span class="fu">gbm.perf</span>(...)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-25_6be30276b57e6186cf3aef6e2a4c9573">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-27_97d33cd568eb2a42facbfb72ba80e1b7">
 
 </div>
 <div class="cell" data-hint="true">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>foret <span class="ot">&lt;-</span> <span class="fu">ranger</span>(...,<span class="at">probability=</span><span class="cn">TRUE</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>arbre <span class="ot">&lt;-</span> <span class="fu">rpart</span>(...)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cp_opt <span class="ot">&lt;-</span> ...</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>arbre.opt <span class="ot">&lt;-</span> <span class="fu">prune</span>(...)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>foret <span class="ot">&lt;-</span> <span class="fu">ranger</span>(...,<span class="at">probability=</span><span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>arbre <span class="ot">&lt;-</span> <span class="fu">rpart</span>(...)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>cp_opt <span class="ot">&lt;-</span> ...</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>arbre.opt <span class="ot">&lt;-</span> <span class="fu">prune</span>(...)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-teacher="false">
 
 </div></li>
 <li><p>Pour les 4 algorithmes, calculer, pour tous les individus de l’échantillon <code>test</code>, la probabilité que ce soit un spam. On pourra stocker toutes ces probabilités dans un même <code>tibble</code>.</p>
 <div class="cell" data-hint="true">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ada=</span><span class="fu">predict</span>(...,<span class="at">type=</span><span class="st">"response"</span>),</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">logit=</span><span class="fu">predict</span>(...),</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">foret=</span><span class="fu">predict</span>(...)<span class="sc">$</span>prediction[,<span class="dv">2</span>],</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">arbre=</span><span class="fu">predict</span>(...)[,<span class="dv">2</span>],</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">obs=</span>test<span class="sc">$</span>type)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ada=</span><span class="fu">predict</span>(...,<span class="at">type=</span><span class="st">"response"</span>),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">logit=</span><span class="fu">predict</span>(...),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">foret=</span><span class="fu">predict</span>(...)<span class="sc">$</span>prediction[,<span class="dv">2</span>],</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">arbre=</span><span class="fu">predict</span>(...)[,<span class="dv">2</span>],</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">obs=</span>test<span class="sc">$</span>type)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-teacher="false">
 
@@ -552,7 +565,7 @@ div.correction {
 <div class="corR">
 <p>Avec une validation croisée plutôt qu’un simple découpage apprentissage/test.</p>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-33_53580de9bbea16a11e11b95a7cfe001f">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-35_73d156609468882c278ec535267f7074">
 
 </div>
 <div class="cell">
@@ -602,26 +615,26 @@ div.correction {
 <div id="exr-egboost-sinus" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercice 3.1 (Prise en main des principales fonction de xgboost) </strong></span>On commence par charger le package</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>et on reprend les données sur le <strong>sinus</strong> de la <a href="#sec-sinusgbm"><span>Section&nbsp;3.1</span></a> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi,<span class="at">by=</span><span class="fl">0.01</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">200</span>,<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">sin</span>(X)<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="at">sd=</span><span class="fl">0.2</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X,Y)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X=</span>x,<span class="at">Y=</span>y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi,<span class="at">by=</span><span class="fl">0.01</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">200</span>,<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi,<span class="dv">2</span><span class="sc">*</span>pi)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">sin</span>(X)<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="at">sd=</span><span class="fl">0.2</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X,Y)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X=</span>x,<span class="at">Y=</span>y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>La fonction <code>xgboost</code> requiert que les données possèdent la classe <code>xgb.DMatrix</code>, on peut l’obtenir avec</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>X_mat <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="fu">as.matrix</span>(df1[,<span class="dv">1</span>]),<span class="at">label=</span>df1<span class="sc">$</span>Y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X_mat <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="fu">as.matrix</span>(df1[,<span class="dv">1</span>]),<span class="at">label=</span>df1<span class="sc">$</span>Y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li><p>Expliquer la sortie</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>boost1 <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data=</span>X_mat,<span class="at">nrounds =</span> <span class="dv">5</span>,<span class="at">params=</span><span class="fu">list</span>(<span class="at">objective=</span><span class="st">"reg:squarederror"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>boost1 <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data=</span>X_mat,<span class="at">nrounds =</span> <span class="dv">5</span>,<span class="at">params=</span><span class="fu">list</span>(<span class="at">objective=</span><span class="st">"reg:squarederror"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] train-rmse:0.633250 
 [2] train-rmse:0.468674 
@@ -629,7 +642,7 @@ div.correction {
 [4] train-rmse:0.275842 
 [5] train-rmse:0.224803 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>boost1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>boost1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##### xgb.Booster
 raw: 16.4 Kb 
@@ -666,8 +679,8 @@ evaluation_log:
 </div></li>
 <li><p>On peut obtenir les valeurs prédites entre <span class="math inline">\(-2\pi\)</span> et <span class="math inline">\(2\pi\)</span> pour 100 itérations avec</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Xtest <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df2<span class="sc">$</span>X)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>prev100 <span class="ot">&lt;-</span> <span class="fu">predict</span>(boost2,<span class="at">newdata=</span>Xtest,<span class="at">iterationrange =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">101</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Xtest <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df2<span class="sc">$</span>X)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>prev100 <span class="ot">&lt;-</span> <span class="fu">predict</span>(boost2,<span class="at">newdata=</span>Xtest,<span class="at">iterationrange =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">101</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tracer les estimateurs <strong>xgboost</strong> pour 1 itération, 20 itérations et 100 itérations. Commenter.</p>
 <div class="cell" data-teacher="false">
@@ -681,14 +694,14 @@ evaluation_log:
 </div></li>
 <li><p>Commenter la sortie</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sel.xgb <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> X_mat,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nrounds =</span> <span class="dv">100</span>, <span class="at">objective =</span> <span class="st">"reg:squarederror"</span>, </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">eval_metric =</span> <span class="st">"rmse"</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nfold=</span><span class="dv">5</span>,<span class="at">eta=</span><span class="fl">0.1</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_stopping_rounds=</span><span class="dv">10</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">verbose=</span><span class="cn">FALSE</span>)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>sel.xgb<span class="sc">$</span>evaluation_log <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>sel.xgb <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> X_mat,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nrounds =</span> <span class="dv">100</span>, <span class="at">objective =</span> <span class="st">"reg:squarederror"</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">eval_metric =</span> <span class="st">"rmse"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nfold=</span><span class="dv">5</span>,<span class="at">eta=</span><span class="fl">0.1</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_stopping_rounds=</span><span class="dv">10</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">verbose=</span><span class="cn">FALSE</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>sel.xgb<span class="sc">$</span>evaluation_log <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   iter train_rmse_mean train_rmse_std test_rmse_mean test_rmse_std
 1:    1       0.7894653    0.012973111      0.7906004    0.05513590
@@ -698,11 +711,11 @@ evaluation_log:
 5:    5       0.5471973    0.009379501      0.5567722    0.05117564
 6:    6       0.5007942    0.008971210      0.5129458    0.04971156</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(ite.opt.xgb <span class="ot">&lt;-</span> sel.xgb<span class="sc">$</span>best_iteration)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(ite.opt.xgb <span class="ot">&lt;-</span> sel.xgb<span class="sc">$</span>best_iteration)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sel.xgb<span class="sc">$</span>niter</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sel.xgb<span class="sc">$</span>niter</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37</code></pre>
 </div>
@@ -730,7 +743,7 @@ evaluation_log:
 <div class="corR">
 <p>On peut maintenant faire la valisation croisée :</p>
 </div>
-<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-51_d4abb50580c44e2b0abdf0983e916a65">
+<div class="cell" data-teacher="false" data-hash="03-boosting_cache/html/unnamed-chunk-53_1dd6b754e4b09b7f5752be9848716bda">
 
 </div>
 <div class="corR">
@@ -751,22 +764,22 @@ evaluation_log:
 <ul>
 <li><p>la profondeur des arbres dans le vecteur</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">10</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">10</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
 <li><p>le nombre d’itérations entre 1 et 500 avec un <code>early_stopping</code> toujours égal à 10 et un learning rate à 0.05.</p></li>
 </ul>
 <p>On pourra consulter la page <a href="https://www.tidymodels.org/find/parsnip/" class="uri">https://www.tidymodels.org/find/parsnip/</a> pour trouver les noms de paramètre du <code>worfklow</code> et sur le tutoriel <a href="https://juliasilge.com/blog/shelter-animals/" class="uri">https://juliasilge.com/blog/shelter-animals/</a> pour la stratégie. Elle est ici de fixer le nombre d’itérations à 500 puisqu’on utilise le <strong>early stopping</strong> en séparant les données en 2. On initialisera donc le workflow avec</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boost_tree</span>(<span class="at">tree_depth=</span><span class="fu">tune</span>(),<span class="at">trees=</span><span class="dv">500</span>,<span class="at">learn_rate=</span><span class="fl">0.05</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">stop_iter=</span><span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>,<span class="at">validation=</span><span class="fl">0.2</span>) </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tune_spec) <span class="sc">|&gt;</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(type <span class="sc">~</span> .)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boost_tree</span>(<span class="at">tree_depth=</span><span class="fu">tune</span>(),<span class="at">trees=</span><span class="dv">500</span>,<span class="at">learn_rate=</span><span class="fl">0.05</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">stop_iter=</span><span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>,<span class="at">validation=</span><span class="fl">0.2</span>) </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(tune_spec) <span class="sc">|&gt;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(type <span class="sc">~</span> .)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="corR">
 <p>On définit la grille de paramètres et le ré-échantillonnage :</p>

@@ -455,12 +455,12 @@ Levels: nonspam spam</code></pre>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="fu">randomForest</span>(type<span class="sc">~</span>.,<span class="at">data=</span>spam.app))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>utilisateur     système      écoulé 
-      6.641       0.125       6.812 </code></pre>
+      6.804       0.151       7.075 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="fu">ranger</span>(type<span class="sc">~</span>.,<span class="at">data=</span>spam.app))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>utilisateur     système      écoulé 
-      2.127       0.018       0.341 </code></pre>
+      2.068       0.017       0.318 </code></pre>
 </div>
 </div>
 <div class="corR">
