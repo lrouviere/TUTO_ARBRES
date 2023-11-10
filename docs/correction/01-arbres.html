@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,16 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -41,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -96,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -134,13 +110,14 @@ div.csl-indent {
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
     "search-detached-cancel-button-title": "Annuler",
-    "search-submit-button-title": "Envoyer"
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
   }
 }</script>
-<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="site_libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
 <script src="site_libs/vis-9.1.0/vis-network.min.js"></script>
-<script src="site_libs/visNetwork-binding-2.1.0/visNetwork.js"></script>
+<script src="site_libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
 <script src="site_libs/FileSaver-1.1.20151003/FileSaver.min.js"></script>
 <script src="site_libs/Blob-1.0/Blob.js"></script>
 <script src="site_libs/canvas-toBlob-1.0/canvas-toBlob.js"></script>
@@ -151,6 +128,7 @@ div.csl-indent {
 <script src="site_libs/jquery-sparkline-2.1.2/jquery.sparkline.js"></script>
 <script src="site_libs/sparkline-binding-2.0/sparkline.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="style.css">
@@ -160,11 +138,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Méthodes CART</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-arbres.html">Arbres</a></li><li class="breadcrumb-item"><a href="./01-arbres.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Méthodes CART</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -172,116 +155,128 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Méthodes par arbres</a> 
         <div class="sidebar-tools-main">
-    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
-    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.pdf">
-            <i class="bi bi-bi-file-pdf pe-1"></i>
-          Download PDF
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.epub">
-            <i class="bi bi-bi-journal pe-1"></i>
-          Download ePub
-          </a>
-        </li>
-    </ul>
-    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
-    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-            <i class="bi bi-bi-twitter pe-1"></i>
-          Twitter
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-            <i class="bi bi-bi-facebook pe-1"></i>
-          Facebook
-          </a>
-        </li>
-    </ul>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Méthodes-par-arbres.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Recherche"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Présentation</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Présentation</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Arbres</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Arbres</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-arbres.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Méthodes CART</span></a>
+  <a href="./01-arbres.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Méthodes CART</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Agrégation</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Agrégation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-forets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></a>
+  <a href="./02-forets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Forêts aléatoires</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-boosting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradient boosting</span></a>
+  <a href="./03-boosting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Gradient boosting</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Références</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table des matières</h2>
    
   <ul>
-  <li><a href="#coupures-cart-en-fonction-de-la-nature-des-variables" id="toc-coupures-cart-en-fonction-de-la-nature-des-variables" class="nav-link active" data-scroll-target="#coupures-cart-en-fonction-de-la-nature-des-variables"> <span class="header-section-number">1.1</span> Coupures CART en fonction de la nature des variables</a>
+  <li><a href="#coupures-cart-en-fonction-de-la-nature-des-variables" id="toc-coupures-cart-en-fonction-de-la-nature-des-variables" class="nav-link active" data-scroll-target="#coupures-cart-en-fonction-de-la-nature-des-variables"><span class="header-section-number">1.1</span> Coupures CART en fonction de la nature des variables</a>
   <ul class="collapse">
-  <li><a href="#arbres-de-régression" id="toc-arbres-de-régression" class="nav-link" data-scroll-target="#arbres-de-régression"> <span class="header-section-number">1.1.1</span> Arbres de régression</a></li>
-  <li><a href="#arbres-de-classification" id="toc-arbres-de-classification" class="nav-link" data-scroll-target="#arbres-de-classification"> <span class="header-section-number">1.1.2</span> Arbres de classification</a></li>
-  <li><a href="#entrée-qualitative" id="toc-entrée-qualitative" class="nav-link" data-scroll-target="#entrée-qualitative"> <span class="header-section-number">1.1.3</span> Entrée qualitative</a></li>
+  <li><a href="#arbres-de-régression" id="toc-arbres-de-régression" class="nav-link" data-scroll-target="#arbres-de-régression"><span class="header-section-number">1.1.1</span> Arbres de régression</a></li>
+  <li><a href="#arbres-de-classification" id="toc-arbres-de-classification" class="nav-link" data-scroll-target="#arbres-de-classification"><span class="header-section-number">1.1.2</span> Arbres de classification</a></li>
+  <li><a href="#entrée-qualitative" id="toc-entrée-qualitative" class="nav-link" data-scroll-target="#entrée-qualitative"><span class="header-section-number">1.1.3</span> Entrée qualitative</a></li>
   </ul></li>
-  <li><a href="#sec-elagage-cart" id="toc-sec-elagage-cart" class="nav-link" data-scroll-target="#sec-elagage-cart"> <span class="header-section-number">1.2</span> Élagage</a>
+  <li><a href="#sec-elagage-cart" id="toc-sec-elagage-cart" class="nav-link" data-scroll-target="#sec-elagage-cart"><span class="header-section-number">1.2</span> Élagage</a>
   <ul class="collapse">
-  <li><a href="#élagage-pour-un-problème-de-régression" id="toc-élagage-pour-un-problème-de-régression" class="nav-link" data-scroll-target="#élagage-pour-un-problème-de-régression"> <span class="header-section-number">1.2.1</span> Élagage pour un problème de régression</a></li>
-  <li><a href="#élagage-en-classification-binaire-et-matrice-de-coût" id="toc-élagage-en-classification-binaire-et-matrice-de-coût" class="nav-link" data-scroll-target="#élagage-en-classification-binaire-et-matrice-de-coût"> <span class="header-section-number">1.2.2</span> Élagage en classification binaire et matrice de coût</a></li>
-  <li><a href="#calcul-de-la-sous-suite-darbres-optimaux" id="toc-calcul-de-la-sous-suite-darbres-optimaux" class="nav-link" data-scroll-target="#calcul-de-la-sous-suite-darbres-optimaux"> <span class="header-section-number">1.2.3</span> Calcul de la sous-suite d’arbres optimaux</a></li>
+  <li><a href="#élagage-pour-un-problème-de-régression" id="toc-élagage-pour-un-problème-de-régression" class="nav-link" data-scroll-target="#élagage-pour-un-problème-de-régression"><span class="header-section-number">1.2.1</span> Élagage pour un problème de régression</a></li>
+  <li><a href="#élagage-en-classification-binaire-et-matrice-de-coût" id="toc-élagage-en-classification-binaire-et-matrice-de-coût" class="nav-link" data-scroll-target="#élagage-en-classification-binaire-et-matrice-de-coût"><span class="header-section-number">1.2.2</span> Élagage en classification binaire et matrice de coût</a></li>
+  <li><a href="#calcul-de-la-sous-suite-darbres-optimaux" id="toc-calcul-de-la-sous-suite-darbres-optimaux" class="nav-link" data-scroll-target="#calcul-de-la-sous-suite-darbres-optimaux"><span class="header-section-number">1.2.3</span> Calcul de la sous-suite d’arbres optimaux</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -291,7 +286,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-arbres" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Méthodes CART</span></span></h1>
+<h1 class="title"><span id="sec-arbres" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Méthodes CART</span></span></h1>
 </div>
 
 
@@ -299,13 +294,13 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
 </header>
 
-<div>
 <div class="cell">
 
 </div>
@@ -328,10 +323,6 @@ div.correction {
   font-style: normal;
 }
 </style>
-</div>
-<div class="cell">
-
-</div>
 <p>Les méthodes par arbres sont des algorithmes où la prévision s’effectue à partir de <strong>moyennes locales</strong>. Plus précisément, étant donné un échantillon <span class="math inline">\((x_1,y_1)\dots,(x_n,y_n)\)</span>, l’approche consiste à :</p>
 <ul>
 <li>construire une partition de l’espace de variables explicatives (<span class="math inline">\(\mathbb R^p\)</span>) ;</li>
@@ -986,8 +977,8 @@ n= 400
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visNetwork)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visTree</span>(tree_opt)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-cbf142802bb0a0a3728c" style="width:100%;height:600px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cbf142802bb0a0a3728c">{"x":{"nodes":{"id":[1,2,4,8,16,17,9,18,36,37,19,38,39,78,79,5,10,20,40,41,21,11,22,23,46,47,3,6,12,24,25,50,51,13,7],"label":["ShelveLoc","Price","ShelveLoc","Population","3.767","5.386","Advertising","Price","4.987","6.627","CompPrice","6.23","Price","6.732","8.93","Age","Income","ShelveLoc","5.787","7.59","10.081","Income","7.988","ShelveLoc","8.397","10.73","Price","Advertising","Price","7.152","Income","7.603","9.829","11.921","12.188"],"level":[1,2,3,4,5,5,4,5,6,6,5,6,6,7,7,3,4,5,6,6,5,4,5,5,6,6,2,3,4,5,5,6,6,4,3],"color":["#F1B8C2","#E6BFA6","#F1B8C2","#CBC999","#E6E0F8","#D4B5EA","#A9D1A5","#E6BFA6","#D8C0ED","#C695DF","#8DD4C1","#CA9FE3","#E6BFA6","#C592DF","#AC59CC","#91D1DD","#B4C7ED","#F1B8C2","#CFABE6","#BB7CD7","#A03BC2","#B4C7ED","#B771D4","#F1B8C2","#B267D0","#992ABD","#E6BFA6","#A9D1A5","#E6BFA6","#C087DB","#B4C7ED","#BB7BD7","#A341C4","#8B0AB3","#8904B1"],"value":[400,315,207,61,25,36,146,77,34,43,69,19,50,28,22,108,65,56,20,36,9,43,13,30,9,21,85,57,48,12,36,9,27,9,28],"shape":["dot","dot","dot","dot","square","square","dot","dot","square","square","dot","square","dot","square","square","dot","dot","dot","square","square","square","dot","square","dot","square","square","dot","dot","dot","square","dot","square","square","square","square"],"title":["<div style=\"text-align:center;\">N : <b>100%<\/b> (400)<br>Complexity : <b>0.251<\/b><br>Mean : <b>7.496<\/b><br>Variance : <b>7.976<\/b><\/div>","<div style=\"text-align:center;\">N : <b>78.7%<\/b> (315)<br>Complexity : <b>0.105<\/b><br>Mean : <b>6.763<\/b><br>Variance : <b>5.922<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>51.7%<\/b> (207)<br>Complexity : <b>0.046<\/b><br>Mean : <b>6.019<\/b><br>Variance : <b>4.644<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>15.2%<\/b> (61)<br>Complexity : <b>0.012<\/b><br>Mean : <b>4.722<\/b><br>Variance : <b>4.014<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.2%<\/b> (25)<br>Complexity : <b>0.007<\/b><br>Mean : <b>3.767<\/b><br>Variance : <b>3.676<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> >= 105.5<br><b> Population <\/b> < 196.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (36)<br>Complexity : <b>0.008<\/b><br>Mean : <b>5.386<\/b><br>Variance : <b>3.255<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> >= 105.5<br><b> Population <\/b> >= 196.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>36.5%<\/b> (146)<br>Complexity : <b>0.022<\/b><br>Mean : <b>6.56<\/b><br>Variance : <b>3.934<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>19.2%<\/b> (77)<br>Complexity : <b>0.016<\/b><br>Mean : <b>5.902<\/b><br>Variance : <b>3.686<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> < 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>8.5%<\/b> (34)<br>Complexity : <b>0.01<\/b><br>Mean : <b>4.987<\/b><br>Variance : <b>4.047<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 127<br><b> Advertising <\/b> < 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.8%<\/b> (43)<br>Complexity : <b>0.009<\/b><br>Mean : <b>6.627<\/b><br>Variance : <b>2.274<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b>  <\/b> 105.5 <= <b>Price<\/b> < 127<br><b> Advertising <\/b> < 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>17.2%<\/b> (69)<br>Complexity : <b>0.014<\/b><br>Mean : <b>7.295<\/b><br>Variance : <b>3.232<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> >= 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>4.8%<\/b> (19)<br>Complexity : <b>0.01<\/b><br>Mean : <b>6.23<\/b><br>Variance : <b>2.241<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> < 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>12.5%<\/b> (50)<br>Complexity : <b>0.014<\/b><br>Mean : <b>7.699<\/b><br>Variance : <b>3.055<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> >= 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7%<\/b> (28)<br>Complexity : <b>0.006<\/b><br>Mean : <b>6.732<\/b><br>Variance : <b>2.666<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 127<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> >= 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.5%<\/b> (22)<br>Complexity : <b>0.01<\/b><br>Mean : <b>8.93<\/b><br>Variance : <b>0.865<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b>  <\/b> 105.5 <= <b>Price<\/b> < 127<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> >= 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>27%<\/b> (108)<br>Complexity : <b>0.034<\/b><br>Mean : <b>8.189<\/b><br>Variance : <b>5.314<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>16.2%<\/b> (65)<br>Complexity : <b>0.024<\/b><br>Mean : <b>7.38<\/b><br>Variance : <b>4.735<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>14%<\/b> (56)<br>Complexity : <b>0.013<\/b><br>Mean : <b>6.946<\/b><br>Variance : <b>3.692<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5%<\/b> (20)<br>Complexity : <b>0.01<\/b><br>Mean : <b>5.787<\/b><br>Variance : <b>4.051<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (36)<br>Complexity : <b>0.007<\/b><br>Mean : <b>7.59<\/b><br>Variance : <b>2.407<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>10.081<\/b><br>Variance : <b>2.977<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.8%<\/b> (43)<br>Complexity : <b>0.012<\/b><br>Mean : <b>9.413<\/b><br>Variance : <b>3.778<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.2%<\/b> (13)<br>Complexity : <b>0.01<\/b><br>Mean : <b>7.988<\/b><br>Variance : <b>1.604<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> < 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.5%<\/b> (30)<br>Complexity : <b>0.011<\/b><br>Mean : <b>10.03<\/b><br>Variance : <b>3.503<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> >= 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>8.397<\/b><br>Variance : <b>2.845<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> >= 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.2%<\/b> (21)<br>Complexity : <b>0.005<\/b><br>Mean : <b>10.73<\/b><br>Variance : <b>2.227<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> >= 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>21.2%<\/b> (85)<br>Complexity : <b>0.051<\/b><br>Mean : <b>10.214<\/b><br>Variance : <b>6.256<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>14.2%<\/b> (57)<br>Complexity : <b>0.024<\/b><br>Mean : <b>9.244<\/b><br>Variance : <b>4.951<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 109.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>12%<\/b> (48)<br>Complexity : <b>0.013<\/b><br>Mean : <b>8.743<\/b><br>Variance : <b>3.945<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 109.5<br><b> Advertising <\/b> < 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3%<\/b> (12)<br>Complexity : <b>0.01<\/b><br>Mean : <b>7.152<\/b><br>Variance : <b>3.332<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 142.5<br><b> Advertising <\/b> < 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (36)<br>Complexity : <b>0.011<\/b><br>Mean : <b>9.273<\/b><br>Variance : <b>3.095<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b>  <\/b> 109.5 <= <b>Price<\/b> < 142.5<br><b> Advertising <\/b> < 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>7.603<\/b><br>Variance : <b>1.228<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b>  <\/b> 109.5 <= <b>Price<\/b> < 142.5<br><b> Advertising <\/b> < 13.5<br><b> Income <\/b> < 40.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.8%<\/b> (27)<br>Complexity : <b>0.005<\/b><br>Mean : <b>9.829<\/b><br>Variance : <b>2.502<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b>  <\/b> 109.5 <= <b>Price<\/b> < 142.5<br><b> Advertising <\/b> < 13.5<br><b> Income <\/b> >= 40.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>11.921<\/b><br>Variance : <b>1.909<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 109.5<br><b> Advertising <\/b> >= 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7%<\/b> (28)<br>Complexity : <b>0.007<\/b><br>Mean : <b>12.188<\/b><br>Variance : <b>3.17<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> < 109.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>"],"fixed":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"colorClust":["#BC7ED8","#C491DE","#CDA5E5","#DBC7EF","#E6E0F8","#D4B5EA","#C797E0","#CEA8E5","#D8C0ED","#C695DF","#BF83DA","#CA9FE3","#BA79D6","#C592DF","#AC59CC","#B56CD2","#BE81D9","#C28CDD","#CFABE6","#BB7CD7","#A03BC2","#A74CC8","#B771D4","#A03CC3","#B267D0","#992ABD","#9E37C1","#A950C9","#AF5ECE","#C087DB","#A950C9","#BB7BD7","#A341C4","#8B0AB3","#8904B1"],"labelClust":[7.496,6.763,6.019,4.722,3.767,5.386,6.56,5.902,4.987,6.627,7.295,6.23,7.699,6.732,8.93,8.189,7.38,6.946,5.787,7.59,10.081,9.413,7.988,10.03,8.397,10.73,10.214,9.244,8.743,7.152,9.273,7.603,9.829,11.921,12.188],"Leaf":[0,0,0,0,1,1,0,0,1,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,1],"font.size":[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16],"scaling.min":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5],"scaling.max":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5]},"edges":{"id":["edge1","edge2","edge3","edge4","edge5","edge6","edge7","edge8","edge9","edge10","edge11","edge12","edge13","edge14","edge15","edge16","edge17","edge18","edge19","edge20","edge21","edge22","edge23","edge24","edge25","edge26","edge27","edge28","edge29","edge30","edge31","edge32","edge33","edge34"],"from":[1,2,4,8,8,4,9,18,18,9,19,19,39,39,2,5,10,20,20,10,5,11,11,23,23,1,3,6,12,12,25,25,6,3],"to":[2,4,8,16,17,9,18,36,37,19,38,39,78,79,5,10,20,40,41,21,11,22,23,46,47,3,6,12,24,25,50,51,13,7],"label":["Bad, Me...",">= 105.5","Bad","< 196.5",">= 196.5","Medium","< 5.5",">= 127","< 127",">= 5.5","< 121.5",">= 121.5",">= 127","< 127","< 105.5",">= 54.5","< 105.5","Bad","Medium",">= 105.5","< 54.5","< 57.5",">= 57.5","Bad","Medium","Good",">= 109.5","< 13.5",">= 142.5","< 142.5","< 40.5",">= 40.5",">= 13.5","< 109.5"],"value":[315,207,61,25,36,146,77,34,43,69,19,50,28,22,108,65,56,20,36,9,43,13,30,9,21,85,57,48,12,36,9,27,9,28],"title":["<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=105.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div>","<div style=\"text-align:center;\"><b>Population<\/b><\/div><div style=\"text-align:center;\"><196.5<\/div>","<div style=\"text-align:center;\"><b>Population<\/b><\/div><div style=\"text-align:center;\">>=196.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\"><5.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=127<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><127<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\">>=5.5<\/div>","<div style=\"text-align:center;\"><b>CompPrice<\/b><\/div><div style=\"text-align:center;\"><121.5<\/div>","<div style=\"text-align:center;\"><b>CompPrice<\/b><\/div><div style=\"text-align:center;\">>=121.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=127<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><127<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><105.5<\/div>","<div style=\"text-align:center;\"><b>Age<\/b><\/div><div style=\"text-align:center;\">>=54.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\"><105.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\">>=105.5<\/div>","<div style=\"text-align:center;\"><b>Age<\/b><\/div><div style=\"text-align:center;\"><54.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\"><57.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\">>=57.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Good<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=109.5<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\"><13.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=142.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><142.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\"><40.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\">>=40.5<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\">>=13.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><109.5<\/div>"],"color":["#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7"],"font.size":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14],"font.align":["horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal"],"smooth.enabled":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"smooth.type":["cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier"],"smooth.roundness":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"layout":{"hierarchical":{"enabled":true,"direction":"UD"}},"interaction":{"dragNodes":false,"selectConnectedEdges":false,"tooltipDelay":500,"zoomSpeed":1},"edges":{"scaling":{"label":{"enabled":false}}}},"groups":null,"width":"100%","height":"600px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"footer":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":50000,"to":0},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":true,"resetHighlight":true,"clusterOptions":{"fixed":true,"physics":false},"keepCoord":true,"labelSuffix":"(cluster)"},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;\n                      white-space: nowrap;\n                      font-family: cursive;font-size:12px;font-color:purple;background-color: #E6E6E6;\n                      border-radius: 15px;","OnceEvents":{"stabilized":"function() { \n        this.setOptions({layout:{hierarchical:false}, physics:{solver:'barnesHut', enabled:true, stabilization : false}, nodes : {physics : false, fixed : true}});\n    }"},"legend":{"width":0.1,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Advertising","Age","CompPrice","Income","Population","Price","ShelveLoc"],"color":["#A9D1A5","#91D1DD","#8DD4C1","#B4C7ED","#CBC999","#E6BFA6","#F1B8C2"],"shape":["dot","dot","dot","dot","dot","dot","dot"],"size":[22,22,22,22,22,22,22],"Leaf":[0,0,0,0,0,0,0],"font.size":[16,16,16,16,16,16,16],"id":[10000,10001,10002,10003,10004,10005,10006]},"nodesToDataframe":true},"tree":{"updateShape":true,"shapeVar":"dot","shapeY":"square","colorVar":{"variable":["ShelveLoc","Price","Population","Advertising","CompPrice","Age","Income"],"color":["#F1B8C2","#E6BFA6","#CBC999","#A9D1A5","#8DD4C1","#91D1DD","#B4C7ED"]},"colorY":{"colRamp":["function (x) ","roundcolor(cbind(palette[[1L]](x), palette[[2L]](x), palette[[3L]](x), ","    if (alpha) palette[[4L]](x))) * 255"],"colorTerm":["#BC7ED8","#C491DE","#CDA5E5","#DBC7EF","#E6E0F8","#D4B5EA","#C797E0","#CEA8E5","#D8C0ED","#C695DF","#BF83DA","#CA9FE3","#BA79D6","#C592DF","#AC59CC","#B56CD2","#BE81D9","#C28CDD","#CFABE6","#BB7CD7","#A03BC2","#A74CC8","#B771D4","#A03CC3","#B267D0","#992ABD","#9E37C1","#A950C9","#AF5ECE","#C087DB","#A950C9","#BB7BD7","#A341C4","#8B0AB3","#8904B1"],"colorY":["#E6E0F8","#8904B1"],"vardecidedClust":[7.496,6.763,6.019,4.722,3.767,5.386,6.56,5.902,4.987,6.627,7.295,6.23,7.699,6.732,8.93,8.189,7.38,6.946,5.787,7.59,10.081,9.413,7.988,10.03,8.397,10.73,10.214,9.244,8.743,7.152,9.273,7.603,9.829,11.921,12.188]}},"export":{"type":"png","css":"float:right;-webkit-border-radius: 10;\n                  -moz-border-radius: 10;\n                  border-radius: 10px;\n                  font-family: Arial;\n                  color: #ffffff;\n                  font-size: 12px;\n                  background: #090a0a;\n                  padding: 4px 8px 4px 4px;\n                  text-decoration: none;","background":"#fff","name":"network.png","label":"Export as png"}},"evals":["OnceEvents.stabilized"],"jsHooks":[]}</script>
+<div id="htmlwidget-cbf142802bb0a0a3728c" style="width:100%;height:600px;" class="visNetwork html-widget "></div>
+<script type="application/json" data-for="htmlwidget-cbf142802bb0a0a3728c">{"x":{"nodes":{"id":[1,2,4,8,16,17,9,18,36,37,19,38,39,78,79,5,10,20,40,41,21,11,22,23,46,47,3,6,12,24,25,50,51,13,7],"label":["ShelveLoc","Price","ShelveLoc","Population","3.767","5.386","Advertising","Price","4.987","6.627","CompPrice","6.23","Price","6.732","8.93","Age","Income","ShelveLoc","5.787","7.59","10.081","Income","7.988","ShelveLoc","8.397","10.73","Price","Advertising","Price","7.152","Income","7.603","9.829","11.921","12.188"],"level":[1,2,3,4,5,5,4,5,6,6,5,6,6,7,7,3,4,5,6,6,5,4,5,5,6,6,2,3,4,5,5,6,6,4,3],"color":["#F1B8C2","#E6BFA6","#F1B8C2","#CBC999","#E6E0F8","#D4B5EA","#A9D1A5","#E6BFA6","#D8C0ED","#C695DF","#8DD4C1","#CA9FE3","#E6BFA6","#C592DF","#AC59CC","#91D1DD","#B4C7ED","#F1B8C2","#CFABE6","#BB7CD7","#A03BC2","#B4C7ED","#B771D4","#F1B8C2","#B267D0","#992ABD","#E6BFA6","#A9D1A5","#E6BFA6","#C087DB","#B4C7ED","#BB7BD7","#A341C4","#8B0AB3","#8904B1"],"value":[400,315,207,61,25,36,146,77,34,43,69,19,50,28,22,108,65,56,20,36,9,43,13,30,9,21,85,57,48,12,36,9,27,9,28],"shape":["dot","dot","dot","dot","square","square","dot","dot","square","square","dot","square","dot","square","square","dot","dot","dot","square","square","square","dot","square","dot","square","square","dot","dot","dot","square","dot","square","square","square","square"],"title":["<div style=\"text-align:center;\">N : <b>100%<\/b> (400)<br>Complexity : <b>0.251<\/b><br>Mean : <b>7.496<\/b><br>Variance : <b>7.976<\/b><\/div>","<div style=\"text-align:center;\">N : <b>78.7%<\/b> (315)<br>Complexity : <b>0.105<\/b><br>Mean : <b>6.763<\/b><br>Variance : <b>5.922<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>51.7%<\/b> (207)<br>Complexity : <b>0.046<\/b><br>Mean : <b>6.019<\/b><br>Variance : <b>4.644<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>15.2%<\/b> (61)<br>Complexity : <b>0.012<\/b><br>Mean : <b>4.722<\/b><br>Variance : <b>4.014<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.2%<\/b> (25)<br>Complexity : <b>0.007<\/b><br>Mean : <b>3.767<\/b><br>Variance : <b>3.676<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> >= 105.5<br><b> Population <\/b> < 196.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (36)<br>Complexity : <b>0.008<\/b><br>Mean : <b>5.386<\/b><br>Variance : <b>3.255<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> >= 105.5<br><b> Population <\/b> >= 196.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>36.5%<\/b> (146)<br>Complexity : <b>0.022<\/b><br>Mean : <b>6.56<\/b><br>Variance : <b>3.934<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>19.2%<\/b> (77)<br>Complexity : <b>0.016<\/b><br>Mean : <b>5.902<\/b><br>Variance : <b>3.686<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> < 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>8.5%<\/b> (34)<br>Complexity : <b>0.01<\/b><br>Mean : <b>4.987<\/b><br>Variance : <b>4.047<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 127<br><b> Advertising <\/b> < 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.8%<\/b> (43)<br>Complexity : <b>0.009<\/b><br>Mean : <b>6.627<\/b><br>Variance : <b>2.274<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b>  <\/b> 105.5 <= <b>Price<\/b> < 127<br><b> Advertising <\/b> < 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>17.2%<\/b> (69)<br>Complexity : <b>0.014<\/b><br>Mean : <b>7.295<\/b><br>Variance : <b>3.232<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> >= 5.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>4.8%<\/b> (19)<br>Complexity : <b>0.01<\/b><br>Mean : <b>6.23<\/b><br>Variance : <b>2.241<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> < 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>12.5%<\/b> (50)<br>Complexity : <b>0.014<\/b><br>Mean : <b>7.699<\/b><br>Variance : <b>3.055<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 105.5<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> >= 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7%<\/b> (28)<br>Complexity : <b>0.006<\/b><br>Mean : <b>6.732<\/b><br>Variance : <b>2.666<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> >= 127<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> >= 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.5%<\/b> (22)<br>Complexity : <b>0.01<\/b><br>Mean : <b>8.93<\/b><br>Variance : <b>0.865<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b>  <\/b> 105.5 <= <b>Price<\/b> < 127<br><b> Advertising <\/b> >= 5.5<br><b> CompPrice <\/b> >= 121.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>27%<\/b> (108)<br>Complexity : <b>0.034<\/b><br>Mean : <b>8.189<\/b><br>Variance : <b>5.314<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>16.2%<\/b> (65)<br>Complexity : <b>0.024<\/b><br>Mean : <b>7.38<\/b><br>Variance : <b>4.735<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>14%<\/b> (56)<br>Complexity : <b>0.013<\/b><br>Mean : <b>6.946<\/b><br>Variance : <b>3.692<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5%<\/b> (20)<br>Complexity : <b>0.01<\/b><br>Mean : <b>5.787<\/b><br>Variance : <b>4.051<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (36)<br>Complexity : <b>0.007<\/b><br>Mean : <b>7.59<\/b><br>Variance : <b>2.407<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> < 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>10.081<\/b><br>Variance : <b>2.977<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> >= 54.5<br><b> Income <\/b> >= 105.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.8%<\/b> (43)<br>Complexity : <b>0.012<\/b><br>Mean : <b>9.413<\/b><br>Variance : <b>3.778<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.2%<\/b> (13)<br>Complexity : <b>0.01<\/b><br>Mean : <b>7.988<\/b><br>Variance : <b>1.604<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> < 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.5%<\/b> (30)<br>Complexity : <b>0.011<\/b><br>Mean : <b>10.03<\/b><br>Variance : <b>3.503<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad, Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> >= 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>8.397<\/b><br>Variance : <b>2.845<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Bad<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> >= 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.2%<\/b> (21)<br>Complexity : <b>0.005<\/b><br>Mean : <b>10.73<\/b><br>Variance : <b>2.227<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Medium<br><b> Price <\/b> < 105.5<br><b> Age <\/b> < 54.5<br><b> Income <\/b> >= 57.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>21.2%<\/b> (85)<br>Complexity : <b>0.051<\/b><br>Mean : <b>10.214<\/b><br>Variance : <b>6.256<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>14.2%<\/b> (57)<br>Complexity : <b>0.024<\/b><br>Mean : <b>9.244<\/b><br>Variance : <b>4.951<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 109.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>12%<\/b> (48)<br>Complexity : <b>0.013<\/b><br>Mean : <b>8.743<\/b><br>Variance : <b>3.945<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 109.5<br><b> Advertising <\/b> < 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3%<\/b> (12)<br>Complexity : <b>0.01<\/b><br>Mean : <b>7.152<\/b><br>Variance : <b>3.332<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 142.5<br><b> Advertising <\/b> < 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (36)<br>Complexity : <b>0.011<\/b><br>Mean : <b>9.273<\/b><br>Variance : <b>3.095<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b>  <\/b> 109.5 <= <b>Price<\/b> < 142.5<br><b> Advertising <\/b> < 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>7.603<\/b><br>Variance : <b>1.228<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b>  <\/b> 109.5 <= <b>Price<\/b> < 142.5<br><b> Advertising <\/b> < 13.5<br><b> Income <\/b> < 40.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.8%<\/b> (27)<br>Complexity : <b>0.005<\/b><br>Mean : <b>9.829<\/b><br>Variance : <b>2.502<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b>  <\/b> 109.5 <= <b>Price<\/b> < 142.5<br><b> Advertising <\/b> < 13.5<br><b> Income <\/b> >= 40.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.2%<\/b> (9)<br>Complexity : <b>0.01<\/b><br>Mean : <b>11.921<\/b><br>Variance : <b>1.909<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> >= 109.5<br><b> Advertising <\/b> >= 13.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7%<\/b> (28)<br>Complexity : <b>0.007<\/b><br>Mean : <b>12.188<\/b><br>Variance : <b>3.17<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> ShelveLoc <\/b> Good<br><b> Price <\/b> < 109.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>"],"fixed":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"colorClust":["#BC7ED8","#C491DE","#CDA5E5","#DBC7EF","#E6E0F8","#D4B5EA","#C797E0","#CEA8E5","#D8C0ED","#C695DF","#BF83DA","#CA9FE3","#BA79D6","#C592DF","#AC59CC","#B56CD2","#BE81D9","#C28CDD","#CFABE6","#BB7CD7","#A03BC2","#A74CC8","#B771D4","#A03CC3","#B267D0","#992ABD","#9E37C1","#A950C9","#AF5ECE","#C087DB","#A950C9","#BB7BD7","#A341C4","#8B0AB3","#8904B1"],"labelClust":[7.496,6.763,6.019,4.722,3.767,5.386,6.56,5.902,4.987,6.627,7.295,6.23,7.699,6.732,8.93,8.189,7.38,6.946,5.787,7.59,10.081,9.413,7.988,10.03,8.397,10.73,10.214,9.244,8.743,7.152,9.273,7.603,9.829000000000001,11.921,12.188],"Leaf":[0,0,0,0,1,1,0,0,1,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0,1,1,0,0,0,1,0,1,1,1,1],"font.size":[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16],"scaling.min":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5],"scaling.max":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5]},"edges":{"id":["edge1","edge2","edge3","edge4","edge5","edge6","edge7","edge8","edge9","edge10","edge11","edge12","edge13","edge14","edge15","edge16","edge17","edge18","edge19","edge20","edge21","edge22","edge23","edge24","edge25","edge26","edge27","edge28","edge29","edge30","edge31","edge32","edge33","edge34"],"from":[1,2,4,8,8,4,9,18,18,9,19,19,39,39,2,5,10,20,20,10,5,11,11,23,23,1,3,6,12,12,25,25,6,3],"to":[2,4,8,16,17,9,18,36,37,19,38,39,78,79,5,10,20,40,41,21,11,22,23,46,47,3,6,12,24,25,50,51,13,7],"label":["Bad, Me...",">= 105.5","Bad","< 196.5",">= 196.5","Medium","< 5.5",">= 127","< 127",">= 5.5","< 121.5",">= 121.5",">= 127","< 127","< 105.5",">= 54.5","< 105.5","Bad","Medium",">= 105.5","< 54.5","< 57.5",">= 57.5","Bad","Medium","Good",">= 109.5","< 13.5",">= 142.5","< 142.5","< 40.5",">= 40.5",">= 13.5","< 109.5"],"value":[315,207,61,25,36,146,77,34,43,69,19,50,28,22,108,65,56,20,36,9,43,13,30,9,21,85,57,48,12,36,9,27,9,28],"title":["<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=105.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div>","<div style=\"text-align:center;\"><b>Population<\/b><\/div><div style=\"text-align:center;\"><196.5<\/div>","<div style=\"text-align:center;\"><b>Population<\/b><\/div><div style=\"text-align:center;\">>=196.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\"><5.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=127<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><127<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\">>=5.5<\/div>","<div style=\"text-align:center;\"><b>CompPrice<\/b><\/div><div style=\"text-align:center;\"><121.5<\/div>","<div style=\"text-align:center;\"><b>CompPrice<\/b><\/div><div style=\"text-align:center;\">>=121.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=127<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><127<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><105.5<\/div>","<div style=\"text-align:center;\"><b>Age<\/b><\/div><div style=\"text-align:center;\">>=54.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\"><105.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\">>=105.5<\/div>","<div style=\"text-align:center;\"><b>Age<\/b><\/div><div style=\"text-align:center;\"><54.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\"><57.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\">>=57.5<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Bad<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Medium<\/div>","<div style=\"text-align:center;\"><b>ShelveLoc<\/b><\/div><div style=\"text-align:center;\">Good<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=109.5<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\"><13.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\">>=142.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><142.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\"><40.5<\/div>","<div style=\"text-align:center;\"><b>Income<\/b><\/div><div style=\"text-align:center;\">>=40.5<\/div>","<div style=\"text-align:center;\"><b>Advertising<\/b><\/div><div style=\"text-align:center;\">>=13.5<\/div>","<div style=\"text-align:center;\"><b>Price<\/b><\/div><div style=\"text-align:center;\"><109.5<\/div>"],"color":["#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7"],"font.size":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14],"font.align":["horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal"],"smooth.enabled":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"smooth.type":["cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier"],"smooth.roundness":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"layout":{"hierarchical":{"enabled":true,"direction":"UD"}},"interaction":{"dragNodes":false,"selectConnectedEdges":false,"tooltipDelay":500,"zoomSpeed":1},"edges":{"scaling":{"label":{"enabled":false}}}},"groups":null,"width":"100%","height":"600px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"footer":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":50000,"to":0},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":true,"resetHighlight":true,"clusterOptions":{"fixed":true,"physics":false},"keepCoord":true,"labelSuffix":"(cluster)"},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;\n                      white-space: nowrap;\n                      font-family: cursive;font-size:12px;font-color:purple;background-color: #E6E6E6;\n                      border-radius: 15px;","OnceEvents":{"stabilized":"function() { \n        this.setOptions({layout:{hierarchical:false}, physics:{solver:'barnesHut', enabled:true, stabilization : false}, nodes : {physics : false, fixed : true}});\n    }"},"legend":{"width":0.1,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Advertising","Age","CompPrice","Income","Population","Price","ShelveLoc"],"color":["#A9D1A5","#91D1DD","#8DD4C1","#B4C7ED","#CBC999","#E6BFA6","#F1B8C2"],"shape":["dot","dot","dot","dot","dot","dot","dot"],"size":[22,22,22,22,22,22,22],"Leaf":[0,0,0,0,0,0,0],"font.size":[16,16,16,16,16,16,16],"id":[10000,10001,10002,10003,10004,10005,10006]},"nodesToDataframe":true},"tree":{"updateShape":true,"shapeVar":"dot","shapeY":"square","colorVar":{"variable":["ShelveLoc","Price","Population","Advertising","CompPrice","Age","Income"],"color":["#F1B8C2","#E6BFA6","#CBC999","#A9D1A5","#8DD4C1","#91D1DD","#B4C7ED"]},"colorY":{"colRamp":["function (x) ","roundcolor(cbind(palette[[1L]](x), palette[[2L]](x), palette[[3L]](x), ","    if (alpha) palette[[4L]](x))) * 255"],"colorTerm":["#BC7ED8","#C491DE","#CDA5E5","#DBC7EF","#E6E0F8","#D4B5EA","#C797E0","#CEA8E5","#D8C0ED","#C695DF","#BF83DA","#CA9FE3","#BA79D6","#C592DF","#AC59CC","#B56CD2","#BE81D9","#C28CDD","#CFABE6","#BB7CD7","#A03BC2","#A74CC8","#B771D4","#A03CC3","#B267D0","#992ABD","#9E37C1","#A950C9","#AF5ECE","#C087DB","#A950C9","#BB7BD7","#A341C4","#8B0AB3","#8904B1"],"colorY":["#E6E0F8","#8904B1"],"vardecidedClust":[7.496,6.763,6.019,4.722,3.767,5.386,6.56,5.902,4.987,6.627,7.295,6.23,7.699,6.732,8.93,8.189,7.38,6.946,5.787,7.59,10.081,9.413,7.988,10.03,8.397,10.73,10.214,9.244,8.743,7.152,9.273,7.603,9.829000000000001,11.921,12.188]}},"export":{"type":"png","css":"float:right;-webkit-border-radius: 10;\n                  -moz-border-radius: 10;\n                  border-radius: 10px;\n                  font-family: Arial;\n                  color: #ffffff;\n                  font-size: 12px;\n                  background: #090a0a;\n                  padding: 4px 8px 4px 4px;\n                  text-decoration: none;","background":"#fff","name":"network.png","label":"Export as png"}},"evals":["OnceEvents.stabilized"],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="corR">
@@ -1002,13 +993,13 @@ n= 400
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">slice</span>(<span class="dv">3</span>,<span class="dv">58</span>,<span class="dv">185</span>,<span class="dv">218</span>) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Sales))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 10
-  CompPrice Income Advertising Populat…¹ Price Shelv…²   Age Educa…³ Urban US   
-      &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;
-1       113     35          10       269    80 Medium     59      12 Yes   Yes  
-2        93     91           0        22   117 Bad        75      11 Yes   No   
-3       132     33           7        35    97 Medium     60      11 No    Yes  
-4       106     44           0       481   111 Medium     70      14 No    No   
-# … with abbreviated variable names ¹​Population, ²​ShelveLoc, ³​Education</code></pre>
+  CompPrice Income Advertising Population Price ShelveLoc   Age Education Urban
+      &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;
+1       113     35          10        269    80 Medium       59        12 Yes  
+2        93     91           0         22   117 Bad          75        11 Yes  
+3       132     33           7         35    97 Medium       60        11 No   
+4       106     44           0        481   111 Medium       70        14 No   
+# ℹ 1 more variable: US &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>Calculer les valeurs prédites.</p>
@@ -1031,9 +1022,6 @@ n= 400
 <div class="cell" data-teacher="true">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4321</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Sales<span class="sc">~</span>.,<span class="at">data=</span>train,<span class="at">cp=</span><span class="fl">0.000001</span>,<span class="at">minsplit=</span><span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-
 </div>
 <p>Dans cette suite, sélectionner</p>
 <ul>
@@ -1595,7 +1583,7 @@ n= 400
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="01-arbres_files/figure-html/arbre-T0-algo-elagage-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">L’arbre <span class="math inline">\(T_0\)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">L’arbre <span class="math inline">\(T_0\)</span>.</figcaption>
 </figure>
 </div>
 </div>
@@ -1692,7 +1680,7 @@ n= 150
 <div id="fig-exo-elag-T1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="01-arbres_files/figure-html/fig-exo-elag-T1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 1.1: L’arbre <span class="math inline">\(T_{\alpha_1}\)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;1.1: L’arbre <span class="math inline">\(T_{\alpha_1}\)</span>.</figcaption>
 </figure>
 </div>
 </div>
@@ -1750,7 +1738,7 @@ n= 150
 <div id="fig-exo-elag-T2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="01-arbres_files/figure-html/fig-exo-elag-T2-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 1.2: L’arbre <span class="math inline">\(T_{\alpha_2}\)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;1.2: L’arbre <span class="math inline">\(T_{\alpha_2}\)</span>.</figcaption>
 </figure>
 </div>
 </div>
@@ -1759,8 +1747,8 @@ n= 150
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-brfrolst84" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-brfrolst84" class="csl-entry" role="listitem">
 Breiman, L., J. Friedman, R. Olshen, et C. Stone. 1984. <em>Classification and regression trees</em>. Wadsworth &amp; Brooks.
 </div>
 </div>
@@ -1795,9 +1783,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1809,7 +1811,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1837,31 +1856,136 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

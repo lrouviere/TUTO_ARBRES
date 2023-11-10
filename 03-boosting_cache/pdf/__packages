@@ -26,3 +26,4 @@ workflowsets
 yardstick
 xgboost
 rpart
+lubridate

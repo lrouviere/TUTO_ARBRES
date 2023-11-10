@@ -8,3 +8,7 @@
 *.R
 
 /.quarto/
+
+/*
+!/docs/
+/docs/correction/*
